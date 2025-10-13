@@ -9,16 +9,16 @@ const menuData: Menu[] = [
   },
   {
     id: 2,
-    title: "Сугалаанууд",
+    title: "Азтангууд",
     path: "/ticket",
     newTab: false,
   },
-  {
-    id: 4,
-    title: "Бидний тухай",
-    path: "/about",
-    newTab: false,
-  },
+  // {
+  //   id: 4,
+  //   title: "Бидний тухай",
+  //   path: "/about",
+  //   newTab: false,
+  // },
   
   // {
   //   id: 3,

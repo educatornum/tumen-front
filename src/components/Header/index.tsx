@@ -123,7 +123,7 @@ const Header = () => {
                         {menuItem.path ? (
                           <Link
                             href={menuItem.path}
-                            className={`flex py-2 text-base sm:text-lg font-semibold lg:mr-0 lg:inline-flex lg:px-0 lg:py-6 ${gabriela.className} ${
+                            className={`flex py-2 text-lg sm:text-xl lg:text-2xl font-semibold lg:py-6 ${gabriela.className} ${
                               usePathName === menuItem.path
                                 ? "text-primary dark:text-white"
                                 : "text-dark hover:text-primary dark:text-white/70 dark:hover:text-white"

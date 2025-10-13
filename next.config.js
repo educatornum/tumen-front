@@ -21,4 +21,15 @@ const nextConfig = {
   }
 };
 
+// Dev-only proxy to local backend to avoid CORS during next dev
+nextConfig.rewrites = async () => {
+  if (!isProd) {
+    return [
+      { source: '/api/search/:path*', destination: 'http://localhost:3000/search/:path*' },
+      { source: '/api/lottery/:path*', destination: 'http://localhost:3000/lottery/:path*' },
+    ];
+  }
+  return [];
+};
+
 module.exports = nextConfig;
