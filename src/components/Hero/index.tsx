@@ -66,9 +66,9 @@ const LotteryModal = ({ isOpen, onClose }) => {
       setError(null);
       
       try {
-        const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
         const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
-        const endpoint = isLocalhost ? `/api/search/${phoneNumber}` : `${backendUrl}/search/${phoneNumber}`;
+        const onGhPages = !!process.env.NEXT_PUBLIC_BASE_PATH;
+        const endpoint = onGhPages ? `${backendUrl}/search/${phoneNumber}` : `/api/search/${phoneNumber}`;
         const response = await fetch(endpoint);
         
         if (!response.ok) {
@@ -326,11 +326,11 @@ const LotteryPurchaseModal = ({ isOpen, onClose }) => {
 
         <div className="text-center">
           <div className="mb-6">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+            {/* <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
               <svg className="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
               </svg>
-            </div>
+            </div> */}
             <h3 className={`text-2xl font-bold text-gray-900 ${lobster.className}`}>
               Сугалаа авах
             </h3>
@@ -373,32 +373,34 @@ const LotteryPurchaseModal = ({ isOpen, onClose }) => {
                 </label>
                 <div className="mt-3 grid grid-cols-2 gap-3">
                   {[
-                    { amount: 20200, image: "/images/blog/blog-details-02.jpg", title: "20,000₮" },
-                    { amount: 40400, image: "/images/blog/blog-details-02.jpg", title: "40,000₮" },
-                    { amount: 60600, image: "/images/blog/blog-details-02.jpg", title: "60,000₮" },
-                    { amount: 101000, image: "/images/blog/blog-details-02.jpg", title: "100,000₮" }
+                    { amount: 20200, image: "/images/aztan/20k.png", title: "20,000₮" },
+                    { amount: 40400, image: "/images/aztan/40k.png", title: "40,000₮" },
+                    { amount: 60600, image: "/images/aztan/60k.png", title: "60,000₮" },
+                    { amount: 101000, image: "/images/aztan/100k.png", title: "100,000₮" }
                   ].map(({ amount, image, title }) => (
                     <button
                       key={amount}
                       type="button"
                       onClick={() => setSelectedAmount(amount)}
-                      className={`relative overflow-hidden rounded-lg border-2 transition-all duration-300 ${
+                      className={`relative overflow-hidden rounded-lg border-2 shadow-sm ${
                         selectedAmount === amount
                           ? "border-blue-500 ring-2 ring-blue-200"
                           : "border-gray-300 hover:border-blue-300"
                       }`}
                     >
-                      <div className="relative h-20 w-full">
+                      <div className="relative w-full">
                         <img
                           src={image}
                           alt={title}
-                          className="h-full w-full object-cover"
+                          className="w-full h-auto object-contain brightness-100 contrast-125 saturate-125 drop-shadow"
+                          // className="w-full h-auto object-contain drop-shadow"
+                          // className="h-full w-full object-contain"
                         />
                         <div className="absolute inset-0 bg-black/40" />
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <span className={`text-white font-bold text-lg ${gabriela.className}`}>
+                          {/* <span className={`text-white font-bold text-lg ${gabriela.className}`}>
                             {title}
-                          </span>
+                          </span> */}
                         </div>
                         {selectedAmount === amount && (
                           <div className="absolute top-2 right-2">

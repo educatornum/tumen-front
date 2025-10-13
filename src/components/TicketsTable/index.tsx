@@ -36,9 +36,9 @@ const TicketsTable = () => {
   const fetchTickets = async () => {
     try {
       setIsLoading(true);
-      const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
       const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
-      const endpoint = isLocalhost ? '/api/lottery/recent' : `${backendUrl}/lottery/recent`;
+      const onGhPages = !!process.env.NEXT_PUBLIC_BASE_PATH; // true only for GitHub Pages builds
+      const endpoint = onGhPages ? `${backendUrl}/lottery/recent` : '/api/lottery/recent';
       const response = await fetch(endpoint);
       
       if (!response.ok) {

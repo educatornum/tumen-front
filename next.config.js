@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const repoName = 'tumen-front';
 const isProd = process.env.NODE_ENV === 'production';
+const isGhPages = process.env.GH_PAGES === 'true';
 
 const nextConfig = {
   output: 'export',
-  basePath: isProd ? `/${repoName}` : '',
-  assetPrefix: isProd ? `/${repoName}/` : '',
+  // Only use basePath/assetPrefix when building for GitHub Pages
+  basePath: isGhPages ? `/${repoName}` : '',
+  assetPrefix: isGhPages ? `/${repoName}/` : '',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -17,7 +19,7 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_BASE_PATH: isProd ? `/${repoName}` : '',
+    NEXT_PUBLIC_BASE_PATH: isGhPages ? `/${repoName}` : '',
   }
 };
 

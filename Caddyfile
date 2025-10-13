@@ -1,0 +1,18 @@
+{
+	email {$EMAIL}
+}
+
+{$DOMAIN} {
+	encode gzip
+
+	# Serve exported Next static site
+	root * /srv
+	file_server
+
+	# Proxy API to backend origin
+	@api path /api/*
+	handle @api {
+		uri strip_prefix /api
+		reverse_proxy {$BACKEND_ORIGIN}
+	}
+}
