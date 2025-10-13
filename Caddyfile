@@ -1,4 +1,4 @@
-{$DOMAIN} {
+tumensugalaa.mn, www.tumensugalaa.mn {
   encode gzip
   root * /srv
   file_server
