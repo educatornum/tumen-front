@@ -1,205 +1,166 @@
 "use client";
 import { useState, useEffect } from "react";
-import DataTable from "react-data-table-component";
-import { Gabriela } from "next/font/google";
-
-const gabriela = Gabriela({
-  subsets: ["latin"],
-  weight: "400",
-});
-
-// Fake data (10 rows)
-const fakeData = Array.from({ length: 10 }).map((_, i) => ({
-  id: i + 1,
-  number: `F-${1000 + i}`,
-  phone_number: "9999-0000",
-  name: "Жишээ машин",
-  is_bonus: false,
-  is_used: false,
-  created_at: new Date().toISOString(),
-}));
+import { Search, Trophy, Calendar, Tag } from "lucide-react";
 
 interface Ticket {
-  id: number;
   number: string;
-  phone_number: string;
   name: string;
-  is_bonus: boolean;
-  is_used: boolean;
   created_at: string;
 }
 
-interface TicketsData {
-  total: number;
+interface GroupedTicket {
+  phone_number: string;
   tickets: Ticket[];
 }
 
-const TicketsTable = () => {
-  const [ticketsData, setTicketsData] = useState<TicketsData | null>(null);
-  const [filteredTickets, setFilteredTickets] = useState<Ticket[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [usingFakeData, setUsingFakeData] = useState(false);
+// --- Fake 20 tickets generator ---
+const generateFakeData = (): GroupedTicket[] => {
+  const data: GroupedTicket[] = [];
+  const phones = ["99119911","88228822","77337733","99889988","95559555"];
+  const cars = ["Toyota Prado","Lexus LX600","Mercedes G-Class","Range Rover","BMW X7"];
+
+  for(let i=0; i<20; i++){
+    const phone = phones[i % phones.length];
+    const tickets: Ticket[] = [{
+      number: `F-${1000 + i}`,
+      name: cars[i % cars.length],
+      created_at: new Date(Date.now() - (i % 7) * 24*60*60*1000).toISOString()
+    }];
+    data.push({ phone_number: phone, tickets });
+  }
+  return data;
+};
+
+export default function TicketsTable() {
+  const [allData, setAllData] = useState<GroupedTicket[]>([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    fetchTickets();
+    setTimeout(() => {
+      setAllData(generateFakeData());
+      setLoading(false);
+    }, 500);
   }, []);
 
-  // Search filter
-  useEffect(() => {
-    if (!ticketsData) return;
+  const filtered = allData.filter(
+    g => g.phone_number.includes(search) || g.tickets.some(
+      t => t.number.toLowerCase().includes(search.toLowerCase()) || t.name.toLowerCase().includes(search.toLowerCase())
+    )
+  );
 
-    const term = searchTerm.toLowerCase();
-    setFilteredTickets(
-      ticketsData.tickets.filter((t) =>
-        t.number.toLowerCase().includes(term) ||
-        t.phone_number.toLowerCase().includes(term) ||
-        t.name.toLowerCase().includes(term) ||
-        t.created_at.toLowerCase().includes(term)
-      )
-    );
-  }, [searchTerm, ticketsData]);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filtered.slice(startIndex, startIndex + itemsPerPage);
 
-  // Fetch tickets
-  const fetchTickets = async () => {
-    try {
-      const backendUrl =
-        process.env.NEXT_PUBLIC_BACKEND_API_URL ||
-        process.env.BACKEND_API_URL ||
-        "http://localhost:3000";
-
-      const onGhPages = !!process.env.NEXT_PUBLIC_BASE_PATH;
-      const endpoint = onGhPages
-        ? `${backendUrl}/lottery/recent`
-        : "/api/lottery/recent";
-
-      const response = await fetch(endpoint);
-
-      if (!response.ok) throw new Error();
-
-      const data = await response.json();
-
-      if (!data || !Array.isArray(data.tickets)) throw new Error();
-
-      setTicketsData(data);
-      setFilteredTickets(data.tickets);
-    } catch (err) {
-      setUsingFakeData(true);
-      const fake = { total: 10, tickets: fakeData };
-      setTicketsData(fake);
-      setFilteredTickets(fake.tickets);
-    }
+  const formatDate = (date: string) => {
+    const d = new Date(date);
+    const now = new Date();
+    const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000*60*60*24));
+    if(diffDays===0) return "Өнөөдөр";
+    if(diffDays===1) return "Өчигдөр";
+    if(diffDays<7) return `${diffDays} хоногийн өмнө`;
+    return `${d.getMonth()+1}-р сарын ${d.getDate()}`;
   };
 
-  const formatDate = (date: string) =>
-    new Date(date).toLocaleString("mn-MN", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-  // COMPACT COLUMNS
-  const columns = [
-    {
-      name: "#",
-      selector: (_row: Ticket, index: number) => index + 1,
-      width: "50px",
-      compact: true,
-    },
-    {
-      name: "Сугалаа",
-      selector: (row: Ticket) => row.number,
-      sortable: true,
-      compact: true,
-      wrap: true,
-    },
-    {
-      name: "Утас",
-      selector: (row: Ticket) => row.phone_number,
-      compact: true,
-      width: "100px",
-    },
-    {
-      name: "Машин",
-      selector: (row: Ticket) => row.name,
-      sortable: true,
-      compact: true,
-      wrap: true,
-    },
-    {
-      name: "Огноо",
-      selector: (row: Ticket) => formatDate(row.created_at),
-      compact: true,
-      width: "150px",
-    },
-  ];
-
-  return (
-    <div className="container py-8">
-      <div className="bg-white dark:bg-gray-dark p-4 rounded-lg shadow-lg">
-
-        <h2 className={`text-xl font-bold text-primary mb-4 ${gabriela.className}`}>
-          🎫 Сүүлийн 20 сугалаа
-        </h2>
-
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="Хайх..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="
-            w-full mb-4 px-3 py-2 rounded-lg border border-gray-300 
-            dark:bg-gray-800 dark:text-white
-            focus:ring-2 focus:ring-primary
-            text-sm
-          "
-        />
-
-        {usingFakeData && (
-          <p className="text-yellow-600 text-sm mb-3">
-            ⚠️ Серверээс дата татсангүй, жишээ дата ашиглав.
-          </p>
-        )}
-
-        {/* Scrollable container */}
-        <div className="max-h-[65vh] overflow-y-auto border rounded-lg">
-          <DataTable
-            columns={columns}
-            data={filteredTickets}
-            pagination={false}   // ❌ Хуудаслалт байхгүй
-            dense              // ✔ Үсэг, padding багатай compact mode
-            responsive
-            highlightOnHover
-            customStyles={{
-              table: {
-                style: {
-                  minWidth: "100%",   // table эхлээд бага өргөн авна
-                  width: "max-content",
-                },
-              },
-              headCells: {
-                style: {
-                  padding: "4px 6px",   // багана бүрийн padding багасгав
-                  fontFamily: gabriela.style.fontFamily,
-                  fontSize: "12px",
-                },
-              },
-              cells: {
-                style: {
-                  padding: "4px 6px",
-                  fontFamily: gabriela.style.fontFamily,
-                  fontSize: "13px",
-                  whiteSpace: "nowrap", // шахаж багтаана
-                },
-              },
-            }}
-          />
-        </div>
+  if(loading) return (
+    <div className="min-h-[40vh] w-full px-4 py-8 bg-gradient-to-b from-white to-orange-50 flex justify-center items-center">
+      <div className="max-w-4xl mx-auto rounded-2xl p-6 border border-orange-200 bg-white shadow-sm text-center">
+        <p className="text-orange-500 text-sm">Уншиж байна...</p>
       </div>
     </div>
   );
-};
 
-export default TicketsTable;
+  return (
+    <div className="w-full px-4 py-10 bg-gradient-to-b from-white via-orange-50 to-white">
+      <div className="max-w-5xl mx-auto">
+
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-black text-orange-600">
+            Шууд сугалаанууд
+          </h2>
+          <div className="mt-4 mx-auto bg-yellow-50 border border-yellow-300 rounded-lg p-3 shadow-md">
+            <p className="text-sm font-medium text-yellow-800 flex items-start justify-center text-left">
+              <span className="text-xl mr-2 mt-0.5" role="img" aria-label="warning">⚠️</span>
+              АНХААРУУЛГА: Манай систем шинэчлэгдсэнтэй холбоотойгоор мессежээр сугалааны код илгээгдэхгүй. Та доорх талбараас сугалаагаа шалгана уу.
+            </p>
+          </div>
+        </div>
+
+        {/* Search */}
+        <div className="p-4 border border-orange-200 rounded-xl bg-white shadow mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-400" />
+            <input 
+              type="text" 
+              value={search} 
+              onChange={(e)=>{setSearch(e.target.value); setCurrentPage(1);}} 
+              placeholder="Утас, дугаар, машин хайх..." 
+              className={`w-full pl-10 pr-8 py-3 border border-orange-200 rounded-xl text-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-100 ${search ? "font-bold text-black" : "text-slate-700"}`} 
+            />
+            {search && (
+              <button onClick={()=>setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-orange-400 hover:text-orange-600 text-sm">✕</button>
+            )}
+          </div>
+        </div>
+
+        {/* List */}
+        <div className="bg-white border border-orange-200 rounded-2xl shadow">
+          {currentItems.length===0 ? (
+            <div className="py-12 text-center text-orange-400">Илэрц олдсонгүй</div>
+          ) : (
+            currentItems.map((group, idx)=>(
+              <div key={`${group.phone_number}-${idx}`} className="border-b border-orange-100 last:border-0 p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <div>
+                    <div className="text-orange-700 font-mono font-bold text-lg">{group.phone_number}</div>
+                    <div className="flex items-center gap-2 text-orange-500 text-xs">
+                      <Calendar className="w-3 h-3" />
+                      <span>{formatDate(group.tickets[0].created_at)}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-full">
+                    <Tag className="w-4 h-4 text-orange-600" />
+                    <span className="text-orange-700 font-bold text-sm">{group.tickets.length}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  {group.tickets.map((ticket, tidx)=>(
+                    <div key={tidx} className="flex items-center gap-2 p-3 bg-orange-50 rounded-lg border border-orange-200">
+                      <span className="text-orange-700 font-mono font-bold text-sm">{ticket.number}</span>
+                      <span className="text-orange-300">•</span>
+                      <div className="flex items-center gap-1.5">
+                        <Trophy className="w-3.5 h-3.5 text-orange-500" />
+                        <span className="text-orange-900 text-sm">{ticket.name}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Pagination */}
+        {totalPages>1 && (
+          <div className="flex justify-center gap-2 mt-6">
+            {Array.from({length: totalPages}, (_, i)=>(
+              <button 
+                key={i} 
+                onClick={()=>setCurrentPage(i+1)} 
+                className={`px-3 py-1 rounded-md border ${currentPage===i+1 ? "bg-orange-600 text-white border-orange-600" : "bg-white text-orange-700 border-orange-300 hover:bg-orange-50"}`}
+              >
+                {i+1}
+              </button>
+            ))}
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
