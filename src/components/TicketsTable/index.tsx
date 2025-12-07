@@ -193,7 +193,7 @@ export default function TicketsTable() {
                           }}
                         >
                           <div className="flex items-center gap-2">
-                            <span className="text-orange-700 font-mono font-bold text-sm">{ticket.number}</span>
+                            <span className="text-orange-700 font-mono font-bold text-sm">{ String(ticket.number).padStart(6, '0')}</span>
                             <span className="text-orange-300">•</span>
                             <div className="flex items-center gap-1.5">
                               <Trophy className="w-3.5 h-3.5 text-orange-500" />

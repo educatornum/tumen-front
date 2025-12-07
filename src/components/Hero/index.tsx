@@ -144,8 +144,9 @@ const CheckLotteryModal = ({ isOpen, onClose }) => {
                     <div>
                       <p className="text-xs text-white/60">Дугаар #{i + 1}</p>
                       <p className={`text-2xl font-black ${ticket.is_bonus ? 'text-yellow-300' : 'text-white'}`}>
-                        {ticket.number}
+                         {String(ticket.number).padStart(6, '0')}
                       </p>
+
                     </div>
                   </div>
                   <div className="mt-2 pt-2 border-t border-white/10">
@@ -388,10 +389,44 @@ export default function Hero() {
   const [checkModal, setCheckModal] = useState(false);
   const [buyModal, setBuyModal] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [counts,setCounts] = useState<number | null>(null);
+  const [loading,setIsLoading] = useState(false);
+  
+
+
+  const TOTAL_LOTTERY = 7999;
+
+   const fetchCounts = async () => {
+    try {
+      setIsLoading(true);
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+      const onGhPages = !!process.env.NEXT_PUBLIC_BASE_PATH;
+      const endpoint = onGhPages ? `${backendUrl}/lottery/counts` : '/api/lottery/counts';
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch tickets');
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setCounts(data.total);
+    } catch (err: any) {
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const move = (e) => setMousePos({ x: e.clientX, y: e.clientY });
     window.addEventListener("mousemove", move);
+
+    fetchCounts();
+    
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
@@ -473,39 +508,30 @@ export default function Hero() {
           </div>
 
           {/* Сугалааны дүүргэлт Progress Bar */}
-          <div className="max-w-2xl mx-auto mb-8">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-sm font-bold text-white/80">🎯 Сугалааны дүүргэлт PRODA-150</span>
-                <span className="text-sm font-black text-white">50%</span>
+          <div className="max-w-2xl mx-auto mb-8 px-2 sm:px-0">
+            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 shadow-2xl">
+              <div className="flex  sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3 sm:mb-4">
+                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт PRODA-150</span>
+                <span className="text-xl sm:text-2xl lg:text-3xl font-black text-red-500">{ counts != null ? (counts / TOTAL_LOTTERY * 100).toFixed(2) + '%' : '0%'}</span>
               </div>
-              
+
               {/* Progress Bar */}
-              <div className="relative h-4 bg-black/40 rounded-full overflow-hidden border border-white/10">
-                <div 
-                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 rounded-full transition-all duration-1000 ease-out animate-pulse"
-                  style={{ width: '50%' }}
+              <div className="relative h-4 sm:h-5 lg:h-6 bg-black/40 rounded-full overflow-hidden border sm:border-2 border-white/20 shadow-inner">
+                <div
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 rounded-full transition-all duration-1000 ease-out animate-pulse shadow-lg"
+                  style={{ width: counts != null ? (counts / TOTAL_LOTTERY * 100).toFixed(2) + '%' : '0%', boxShadow: '0 0 20px rgba(249, 115, 22, 0.8)' }}
                 />
                 {/* Shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
-              </div>
-              
-              <div className="flex justify-between items-center mt-3 text-xs">
-                <span className="text-white/60">
-                  <span className="font-bold text-yellow-300">4,000</span> зарагдсан
-                </span>
-                <span className="text-white/60">
-                  Нийт: <span className="font-bold text-white">7,999</span>
-                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-4 max-w-3xl mx-auto">
             {[
-              { icon: TrendingUp, number: "100К+", label: "Оролцогч", color: "from-red-400 to-orange-500" },
-              { icon: Trophy, number: "30+", label: "Машин", color: "from-purple-400 to-pink-500" },
-              { icon: Shield, number: "100%", label: "Найдвартай", color: "from-blue-400 to-cyan-500" },
+              { icon: TrendingUp, number: counts, label: "Зарагдсан", color: "from-red-400 to-orange-500" },
+              { icon: Trophy, number: TOTAL_LOTTERY, label: "Нийт сугалаа", color: "from-purple-400 to-pink-500" },
+              { icon: Shield, number: TOTAL_LOTTERY - counts, label: "Үлдсэн", color: "from-blue-400 to-cyan-500" },
             ].map((stat, i) => {
               const Icon = stat.icon;
               return (
