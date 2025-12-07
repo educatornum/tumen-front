@@ -3,8 +3,12 @@ import { useState, useEffect } from "react";
 import { Search, Trophy, Calendar, Tag } from "lucide-react";
 
 interface Ticket {
+  id: number;
   number: string;
+  phone_number: string;
   name: string;
+  is_bonus: boolean;
+  is_used: boolean;
   created_at: string;
 }
 
@@ -13,39 +17,65 @@ interface GroupedTicket {
   tickets: Ticket[];
 }
 
-// --- Fake 20 tickets generator ---
-const generateFakeData = (): GroupedTicket[] => {
-  const data: GroupedTicket[] = [];
-  const phones = ["99119911","88228822","77337733","99889988","95559555"];
-  const cars = ["Toyota Prado","Lexus LX600","Mercedes G-Class","Range Rover","BMW X7"];
+interface TicketsData {
+  total: number;
+  tickets: Ticket[];
+}
 
-  for(let i=0; i<20; i++){
-    const phone = phones[i % phones.length];
-    const tickets: Ticket[] = [{
-      number: `F-${1000 + i}`,
-      name: cars[i % cars.length],
-      created_at: new Date(Date.now() - (i % 7) * 24*60*60*1000).toISOString()
-    }];
-    data.push({ phone_number: phone, tickets });
-  }
-  return data;
-};
 
 export default function TicketsTable() {
-  const [allData, setAllData] = useState<GroupedTicket[]>([]);
+  const [ticketsData, setTicketsData] = useState<TicketsData | null>(null);
   const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [error,setError] = useState<string | null>(null);
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const itemsPerPage = 10;
 
-  useEffect(() => {
-    setTimeout(() => {
-      setAllData(generateFakeData());
-      setLoading(false);
-    }, 500);
+   useEffect(() => {
+    fetchTickets();
   }, []);
 
-  const filtered = allData.filter(
+  const fetchTickets = async () => {
+    try {
+      setIsLoading(true);
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+      const onGhPages = !!process.env.NEXT_PUBLIC_BASE_PATH;
+      const endpoint = onGhPages ? `${backendUrl}/lottery/recent` : '/api/lottery/recent';
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch tickets');
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setTicketsData(data);
+    } catch (err: any) {
+      setError(err.message || 'Алдаа гарлаа');
+      console.error('Error fetching tickets:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Group tickets by phone number
+  const groupedData: GroupedTicket[] = ticketsData?.tickets.reduce((acc, ticket) => {
+    const existing = acc.find(g => g.phone_number === ticket.phone_number);
+    if (existing) {
+      existing.tickets.push(ticket);
+    } else {
+      acc.push({ phone_number: ticket.phone_number, tickets: [ticket] });
+    }
+    return acc;
+  }, [] as GroupedTicket[]) || [];
+
+  // Filter grouped data
+  const filtered = groupedData.filter(
     g => g.phone_number.includes(search) || g.tickets.some(
       t => t.number.toLowerCase().includes(search.toLowerCase()) || t.name.toLowerCase().includes(search.toLowerCase())
     )
@@ -55,14 +85,26 @@ export default function TicketsTable() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentItems = filtered.slice(startIndex, startIndex + itemsPerPage);
 
+  const toggleRow = (phoneNumber: string) => {
+    setExpandedRows(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(phoneNumber)) {
+        newSet.delete(phoneNumber);
+      } else {
+        newSet.add(phoneNumber);
+      }
+      return newSet;
+    });
+  };
+
   const formatDate = (date: string) => {
     const d = new Date(date);
-    const now = new Date();
-    const diffDays = Math.floor((now.getTime() - d.getTime()) / (1000*60*60*24));
-    if(diffDays===0) return "Өнөөдөр";
-    if(diffDays===1) return "Өчигдөр";
-    if(diffDays<7) return `${diffDays} хоногийн өмнө`;
-    return `${d.getMonth()+1}-р сарын ${d.getDate()}`;
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const hours = String(d.getHours()).padStart(2, '0');
+    const minutes = String(d.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
 
   if(loading) return (
@@ -80,7 +122,7 @@ export default function TicketsTable() {
         {/* Header */}
         <div className="mb-6 text-center">
           <h2 className="text-2xl sm:text-3xl font-black text-orange-600">
-            Шууд сугалаанууд
+            Сүүлийн гүйлгээ
           </h2>
           <div className="mt-4 mx-auto bg-yellow-50 border border-yellow-300 rounded-lg p-3 shadow-md">
             <p className="text-sm font-medium text-yellow-800 flex items-start justify-center text-left">
@@ -98,7 +140,7 @@ export default function TicketsTable() {
               type="text" 
               value={search} 
               onChange={(e)=>{setSearch(e.target.value); setCurrentPage(1);}} 
-              placeholder="Утас, дугаар, машин хайх..." 
+              placeholder="Утас, дугаар, гүйлгээний утга..." 
               className={`w-full pl-10 pr-8 py-3 border border-orange-200 rounded-xl text-sm focus:border-orange-500 focus:ring-2 focus:ring-orange-100 ${search ? "font-bold text-black" : "text-slate-700"}`} 
             />
             {search && (
@@ -112,36 +154,63 @@ export default function TicketsTable() {
           {currentItems.length===0 ? (
             <div className="py-12 text-center text-orange-400">Илэрц олдсонгүй</div>
           ) : (
-            currentItems.map((group, idx)=>(
-              <div key={`${group.phone_number}-${idx}`} className="border-b border-orange-100 last:border-0 p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <div>
-                    <div className="text-orange-700 font-mono font-bold text-lg">{group.phone_number}</div>
-                    <div className="flex items-center gap-2 text-orange-500 text-xs">
-                      <Calendar className="w-3 h-3" />
-                      <span>{formatDate(group.tickets[0].created_at)}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-50 border border-orange-200 rounded-full">
-                    <Tag className="w-4 h-4 text-orange-600" />
-                    <span className="text-orange-700 font-bold text-sm">{group.tickets.length}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  {group.tickets.map((ticket, tidx)=>(
-                    <div key={tidx} className="flex items-center gap-2 p-3 bg-orange-50 rounded-lg border border-orange-200">
-                      <span className="text-orange-700 font-mono font-bold text-sm">{ticket.number}</span>
-                      <span className="text-orange-300">•</span>
-                      <div className="flex items-center gap-1.5">
-                        <Trophy className="w-3.5 h-3.5 text-orange-500" />
-                        <span className="text-orange-900 text-sm">{ticket.name}</span>
+            currentItems.map((group, idx)=>{
+              const isExpanded = expandedRows.has(group.phone_number);
+              return (
+                <div key={`${group.phone_number}-${idx}`} className="border-b border-orange-100 last:border-0">
+                  {/* Clickable header */}
+                  <div
+                    onClick={() => toggleRow(group.phone_number)}
+                    className="p-4 cursor-pointer hover:bg-orange-50 transition-colors"
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                        <div className="text-orange-700 font-mono font-bold text-lg">{group.phone_number}</div>
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-orange-100 border border-orange-300 rounded-full">
+                          <Tag className="w-3.5 h-3.5 text-orange-600" />
+                          <span className="text-orange-700 font-bold text-xs">{group.tickets.length} сугалаа</span>
+                        </div>
+                      </div>
+                      <div className="text-orange-500 text-xl">
+                        {isExpanded ? "▼" : "▶"}
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Expandable content */}
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="px-4 pb-4 space-y-2">
+                      {group.tickets.map((ticket, tidx)=>(
+                        <div
+                          key={tidx}
+                          className="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-200 transform transition-all duration-200"
+                          style={{
+                            transitionDelay: `${tidx * 50}ms`
+                          }}
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-orange-700 font-mono font-bold text-sm">{ticket.number}</span>
+                            <span className="text-orange-300">•</span>
+                            <div className="flex items-center gap-1.5">
+                              <Trophy className="w-3.5 h-3.5 text-orange-500" />
+                              <span className="text-orange-900 text-sm">{ticket.name}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-orange-500 text-xs">
+                            <Calendar className="w-3 h-3" />
+                            <span>{formatDate(ticket.created_at)}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
 

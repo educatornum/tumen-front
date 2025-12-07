@@ -25,7 +25,7 @@ const Footer = () => {
           {/* 2. Copyright хэсэг */}
           <div className="text-center md:text-right">
             <p className="text-sm text-gray-500 dark:text-gray-400">
-             99707070 
+             90171717 
             </p>
             {/* Хэрэглээгүй мэйл хаягийг хасаж, дизайныг үлдээв. */}
             <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
