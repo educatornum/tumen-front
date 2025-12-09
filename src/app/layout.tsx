@@ -24,12 +24,16 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
+
+  
 }) {
+
+  const path = usePathname();
+
   return (
+
     <html suppressHydrationWarning lang="en">
       {/*
-        <head /> will contain the components returned by the nearest parent
-        head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head>
         <link rel="icon" href="/images/logo/tumen-logo.png" />
@@ -38,11 +42,12 @@ export default function RootLayout({
 
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className} ${lobster.variable} ${vollkorn.variable}`}>
         <Providers>
-          <Header />
+          {!path.includes("admin") && <Header />} 
           {children}
           
           <ScrollToTop />
-          <Footer />
+     
+          {!path.includes("admin") &&      <Footer />} 
         </Providers>
       </body>
     </html>
@@ -50,4 +55,5 @@ export default function RootLayout({
 }
 
 import { Providers } from "./providers";
+import { usePathname } from "next/navigation";
 
