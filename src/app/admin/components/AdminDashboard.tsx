@@ -151,18 +151,10 @@ const AdminDashboard: React.FC = () => {
                   <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full font-medium">
                     Олдсон: {displayedTickets.length}
                   </span>
-                  <p className="text-slate-500 text-sm">PRADO 150 сугалааны оролцогчид</p>
+                  <p className="text-slate-500 text-sm">Сугалааны оролцогчид</p>
                 </div>
               </div>
-              <div className="flex gap-3">
-                 <button className="flex items-center gap-2 bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
-                  <Download className="w-4 h-4" />
-                  Excel татах
-                </button>
-                <button className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm shadow-orange-200">
-                  Шинэ сугалаа нэмэх
-                </button>
-              </div>
+             
             </div>
             
             {/* 2. ОГНООНЫ ХЯЗГААРТ ХАЙХ ТАЛБАР */}
@@ -234,7 +226,6 @@ const AdminDashboard: React.FC = () => {
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Бүтээгдэхүүн</th>
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Төлөв</th>
                       <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Огноо</th>
-                      <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Үйлдэл</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
@@ -285,11 +276,7 @@ const AdminDashboard: React.FC = () => {
                               {formatDate(ticket.created_at)}
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-right">
-                            <button className="p-2 hover:bg-slate-200 rounded-full text-slate-400 hover:text-slate-600 transition-colors">
-                              <MoreHorizontal className="w-5 h-5" />
-                            </button>
-                          </td>
+                          
                         </tr>
                       ))
                     ) : (
@@ -457,14 +444,7 @@ const AdminDashboard: React.FC = () => {
               {isSidebarOpen ? <Menu className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
             </button>
             
-            <div className="hidden md:flex items-center bg-slate-100 rounded-lg px-3 py-2 w-64 lg:w-96 border border-transparent focus-within:border-orange-300 focus-within:bg-white focus-within:shadow-sm transition-all">
-              <Search className="w-4 h-4 text-slate-400 mr-2" />
-              <input 
-                type="text" 
-                placeholder="Утасны дугаар, сугалаагаар хайх..." 
-                className="bg-transparent border-none outline-none text-sm w-full text-slate-700 placeholder-slate-400"
-              />
-            </div>
+         
           </div>
 
           <div className="flex items-center gap-4">
