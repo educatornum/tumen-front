@@ -189,7 +189,7 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
     { amount: 20202, label: "20K", tickets: "1 сугалаа" },
     { amount: 40404, label: "40K", tickets: "2 сугалаа" },
     { amount: 60606, label: "60K", tickets: "3 сугалаа" },
-    { amount: 101010, label: "100K", tickets: "4 сугалаа", popular: true },
+    { amount: 101010, label: "100K", tickets: "5 сугалаа", popular: true },
   ];
 
   const handlePhoneChange = (val) => {
@@ -315,21 +315,21 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
           </button>
         </>
       ) : (
-        <div className="space-y-4">
-          <h2 className="text-xl font-black text-white text-center mb-4">💳 Төлбөр төлөх</h2>
+        <div className="space-y-3 max-h-[90vh] overflow-y-auto">
+          <h2 className="text-xl font-black text-white text-center mb-3">💳 Төлбөр төлөх</h2>
           
-          <div className="bg-white/10 rounded-xl p-4 border border-white/20">
+          <div className="bg-white/10 rounded-xl p-3 border border-white/20">
             <p className="text-sm text-white/60">Утасны дугаар: {phone}</p>
             <p className="text-sm text-white/60">Дүн: {selected?.toLocaleString()}₮</p>
           </div>
 
           {!isPaid() && invoiceData?.qr_image && (
             <div className="flex justify-center">
-              <div className="bg-white p-4 rounded-xl">
+              <div className="bg-white p-3 rounded-xl">
                 <img
                   src={`data:image/png;base64,${invoiceData.qr_image}`}
                   alt="QR Code"
-                  className="w-48 h-48"
+                  className="w-40 h-40"
                 />
               </div>
             </div>
@@ -337,17 +337,17 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
 
           {!isPaid() && (
             <>
-              <p className="text-sm text-white/70 text-center">QR код уншуулах эсвэл банкны апп ашиглана уу</p>
+              <p className="text-xs text-white/70 text-center">QR код уншуулах эсвэл банкны апп ашиглана уу</p>
               
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2 max-h-32 overflow-y-auto">
                 {(invoiceData?.urls || []).map((bank, i) => (
                   <button
                     key={i}
                     onClick={() => window.open(bank.link, '_blank')}
                     className="flex items-center gap-2 p-2 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-all"
                   >
-                    <img src={bank.logo} alt={bank.name} className="w-8 h-8 rounded" />
-                    <span className="text-xs text-white/80">{bank.description}</span>
+                    <img src={bank.logo} alt={bank.name} className="w-6 h-6 rounded flex-shrink-0" />
+                    <span className="text-xs text-white/80 truncate">{bank.description}</span>
                   </button>
                 ))}
               </div>
@@ -355,7 +355,7 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
               <button
                 onClick={handleCheckPayment}
                 disabled={checking}
-                className="w-full py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-bold hover:scale-105 active:scale-100 transition-all disabled:opacity-50"
+                className="w-full py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-bold hover:scale-105 active:scale-100 transition-all disabled:opacity-50"
               >
                 {checking ? "Шалгаж байна..." : "Төлбөр шалгах"}
               </button>
@@ -363,19 +363,19 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
           )}
 
           {checkResult && (
-            <div className={`p-4 rounded-xl ${isPaid() ? 'bg-green-500/20 border-2 border-green-400' : 'bg-yellow-500/20 border-2 border-yellow-400'}`}>
-              <p className={`text-center font-bold ${isPaid() ? 'text-green-300' : 'text-yellow-300'}`}>
+            <div className={`p-3 rounded-xl ${isPaid() ? 'bg-green-500/20 border-2 border-green-400' : 'bg-yellow-500/20 border-2 border-yellow-400'}`}>
+              <p className={`text-center font-bold text-sm ${isPaid() ? 'text-green-300' : 'text-yellow-300'}`}>
                 {isPaid() ? '✅ Төлбөр төлөгдсөн!' : '⏳ ' + (checkResult.message || 'Хүлээгдэж байна')}
               </p>
               {isPaid() && (
-                <p className="text-sm text-white/80 text-center mt-2">Таны утасны дугаар руу мэссэж илгээсэн</p>
+                <p className="text-xs text-white/80 text-center mt-1">Таны утасны дугаар руу мэссэж илгээсэн</p>
               )}
             </div>
           )}
 
           <button
             onClick={handleClose}
-            className="w-full py-3 bg-white/10 border border-white/20 text-white rounded-xl font-bold hover:bg-white/20 transition-all"
+            className="w-full py-2.5 bg-white/10 border border-white/20 text-white rounded-xl font-bold hover:bg-white/20 transition-all"
           >
             Хаах
           </button>
@@ -511,7 +511,7 @@ export default function Hero() {
           <div className="max-w-2xl mx-auto mb-8 px-2 sm:px-0">
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 shadow-2xl">
               <div className="flex  sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3 sm:mb-4">
-                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт PRODA-150</span>
+                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт PRADO-150</span>
                 <span className="text-xl sm:text-2xl lg:text-3xl font-black text-red-500">{ counts != null ? (counts / TOTAL_LOTTERY * 100).toFixed(2) + '%' : '0%'}</span>
               </div>
 
