@@ -12,9 +12,10 @@ import {
 import WinnersTab from './WinnersTab';
 import FailedLotteryTab from './FailedLotteryTab';
 import TransactionsTab from './TransactionsTab';
+import WinnersPlus100Tab from './WinnersPlus100Tab';
 
 // Types definition
-type TabType = 'winners' | 'failed' | 'transactions';
+type TabType = 'winners' | 'failed' | 'transactions' | 'WinnersPlus100Tab';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('winners');
@@ -24,6 +25,12 @@ const AdminDashboard: React.FC = () => {
     {
       id: 'winners',
       label: 'Нийт сугалаа авсан харилцагчид',
+      icon: Ticket,
+      description: 'Сугалаанд оролцох эрхтэй хэрэглэгчид'
+    },
+       {
+      id: 'WinnersPlus100Tab',
+      label: '100-аас дээш харилцагчид',
       icon: Ticket,
       description: 'Сугалаанд оролцох эрхтэй хэрэглэгчид'
     },
@@ -45,6 +52,8 @@ const AdminDashboard: React.FC = () => {
     switch (activeTab) {
       case 'winners':
         return <WinnersTab />;
+      case 'WinnersPlus100Tab':
+        return <WinnersPlus100Tab />;
       case 'failed':
         return <FailedLotteryTab />;
       case 'transactions':

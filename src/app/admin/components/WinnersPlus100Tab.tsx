@@ -2,14 +2,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   Search,
-  AlertCircle,
   Calendar,
   DollarSign,
   FileText,
+  Tag,
 } from 'lucide-react';
-import { fetchNoLotteryRecords, TransactionRecord } from '../services/adminApi';
+import { fetchRecentPlus100k, TransactionRecord } from '../services/adminApi';
 
-const FailedLotteryTab: React.FC = () => {
+const WinnersPlus100Tab: React.FC = () => {
   const getTodayDateString = () => new Date().toISOString().split('T')[0];
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,23 +18,23 @@ const FailedLotteryTab: React.FC = () => {
   const [confirmedStartDate, setConfirmedStartDate] = useState<string>(getTodayDateString);
   const [confirmedEndDate, setConfirmedEndDate] = useState<string>(getTodayDateString);
 
-  const [records, setRecords] = useState<TransactionRecord[]>([]);
+  const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch data from API
-  const loadRecords = async (start: string, end: string) => {
+  const loadTransactions = async (start: string, end: string) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const data = await fetchNoLotteryRecords(start, end);
-      setRecords(data.bank_transactions);
-      setTotalCount(data.total);
+      const response = await fetchRecentPlus100k(start, end);
+      setTransactions(response.bank_transactions);
+      setTotalCount(response.total);
     } catch (err) {
       setError('Өгөгдөл татахад алдаа гарлаа. Дахин оролдоно уу.');
-      console.error('Failed to fetch no lottery records:', err);
+      console.error('Failed to fetch transactions:', err);
     } finally {
       setIsLoading(false);
     }
@@ -42,20 +42,25 @@ const FailedLotteryTab: React.FC = () => {
 
   // Initial load with today's date
   useEffect(() => {
-    loadRecords(confirmedStartDate, confirmedEndDate);
+    loadTransactions(confirmedStartDate, confirmedEndDate);
   }, [confirmedStartDate, confirmedEndDate]);
 
-  // Filter records by search term
-  const displayedRecords = useMemo(() => {
-    if (!searchTerm) return records;
+  // Filter transactions by search term
+  const displayedTransactions = useMemo(() => {
+    if (!searchTerm) return transactions;
 
     const lowerCaseSearch = searchTerm.toLowerCase();
-    return records.filter(record =>
-      record.record_id.toLowerCase().includes(lowerCaseSearch) ||
-      record.description.toLowerCase().includes(lowerCaseSearch) ||
-      record.amount.toString().includes(searchTerm)
+    return transactions.filter(transaction =>
+      transaction.record_id.toLowerCase().includes(lowerCaseSearch) ||
+      transaction.description.toLowerCase().includes(lowerCaseSearch) ||
+      transaction.amount.toString().includes(searchTerm)
     );
-  }, [records, searchTerm]);
+  }, [transactions, searchTerm]);
+
+  // Calculate total amount
+  const totalAmount = useMemo(() => {
+    return displayedTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+  }, [displayedTransactions]);
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -83,12 +88,15 @@ const FailedLotteryTab: React.FC = () => {
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-slate-800">Сугалаа олгож чадаагүй</h2>
+          <h2 className="text-2xl font-bold text-slate-800">100,000₮+ Гүйлгээнүүд</h2>
           <div className="flex items-center gap-2 mt-1">
-            <span className="bg-rose-100 text-rose-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              Олдсон: {displayedRecords.length}
+            <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full font-medium">
+              Олдсон: {displayedTransactions.length}
             </span>
-            <p className="text-slate-500 text-sm">Системийн алдаа эсвэл буцаалт хийгдсэн</p>
+            <span className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">
+              Нийт дүн: {formatAmount(totalAmount)}
+            </span>
+            <p className="text-slate-500 text-sm">90,000₮-с дээш гүйлгээнүүд</p>
           </div>
         </div>
       </div>
@@ -167,6 +175,9 @@ const FailedLotteryTab: React.FC = () => {
                   Гүйлгээний дугаар
                 </th>
                 <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Төрөл
+                </th>
+                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
                   Гүйлгээний огноо
                 </th>
                 <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -183,51 +194,63 @@ const FailedLotteryTab: React.FC = () => {
             <tbody className="divide-y divide-slate-100">
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-slate-500">
+                  <td colSpan={7} className="px-6 py-10 text-center text-slate-500">
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-5 h-5 border-2 border-orange-600 border-t-transparent rounded-full animate-spin"></div>
                       Өгөгдөл уншиж байна...
                     </div>
                   </td>
                 </tr>
-              ) : displayedRecords.length > 0 ? (
-                displayedRecords.map((record) => (
-                  <tr key={record.id} className="hover:bg-slate-50 transition-colors group">
+              ) : displayedTransactions.length > 0 ? (
+                displayedTransactions.map((transaction) => (
+                  <tr key={transaction.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="px-6 py-4">
-                      <span className="text-xs text-slate-400 font-mono">#{record.id}</span>
+                      <span className="text-xs text-slate-400 font-mono">#{transaction.id}</span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <FileText className="w-4 h-4 text-slate-400" />
-                        <span className="text-slate-700 font-medium">{record.record_id}</span>
+                        <span className="text-slate-700 font-medium">{transaction.record_id}</span>
                       </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                          transaction.type === '1' 
+                            ? 'bg-green-100 text-green-800 border-green-200' 
+                            : transaction.type === '2'
+                            ? 'bg-red-100 text-red-800 border-red-200'
+                            : 'bg-gray-100 text-gray-800 border-gray-200'
+                        }`}>
+                          <Tag className="w-3 h-3" />
+                          {transaction.type === '1' ? 'Орлого' : transaction.type === '2' ? 'Зарлага' : 'Тодорхойгүй'}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 text-slate-600 text-sm">
                         <Calendar className="w-4 h-4 text-slate-400" />
-                        {formatDate(record.tranDate)}
+                        {formatDate(transaction.tranDate)}
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-rose-500" />
-                        <span className="text-slate-700 font-semibold">{formatAmount(record.amount)}</span>
+                        <DollarSign className="w-4 h-4 text-emerald-500" />
+                        <span className="text-slate-700 font-semibold">{formatAmount(transaction.amount)}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-slate-600 text-sm">{record.description}</span>
+                      <span className="text-slate-600 text-sm">{transaction.description}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-slate-500 text-sm">{formatDate(record.created_at)}</span>
+                      <span className="text-slate-500 text-sm">{formatDate(transaction.created_at)}</span>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-slate-500">
+                  <td colSpan={7} className="px-6 py-10 text-center text-slate-500">
                     <div className="flex flex-col items-center justify-center gap-3">
-                      <div className="w-16 h-16 bg-rose-50 rounded-full flex items-center justify-center">
-                        <AlertCircle className="w-8 h-8 text-rose-600" />
+                      <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center">
+                        <DollarSign className="w-8 h-8 text-emerald-600" />
                       </div>
                       <div>
                         <h3 className="text-lg font-medium text-slate-900">
@@ -236,7 +259,7 @@ const FailedLotteryTab: React.FC = () => {
                         <p className="text-slate-500 mt-1">
                           {searchTerm
                             ? "Өөр хайлтын нөхцөл оруулна уу"
-                            : "Алдаа гарсан тохиолдолд энд жагсаалт үүснэ"}
+                            : "Сонгосон огноонд 90,000₮+ гүйлгээ байхгүй байна"}
                         </p>
                       </div>
                     </div>
@@ -251,9 +274,12 @@ const FailedLotteryTab: React.FC = () => {
         <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
           <span className="text-sm text-slate-500">
             {searchTerm
-              ? `Хайлтын үр дүнд ${displayedRecords.length} өгөгдөл олдлоо`
-              : `Сонгосон огноонд ${displayedRecords.length} өгөгдөл харагдаж байна`
+              ? `Хайлтын үр дүнд ${displayedTransactions.length} өгөгдөл олдлоо`
+              : `Сонгосон огноонд ${displayedTransactions.length} өгөгдөл харагдаж байна`
             }
+          </span>
+          <span className="text-sm font-semibold text-slate-700">
+            Нийт дүн: {formatAmount(totalAmount)}
           </span>
         </div>
       </div>
@@ -261,4 +287,4 @@ const FailedLotteryTab: React.FC = () => {
   );
 };
 
-export default FailedLotteryTab;
+export default WinnersPlus100Tab;
