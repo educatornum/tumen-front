@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://tumensugalaa.mn/api/admin';
+const API_BASE_URL = 'http://localhost:3000';
 
 // Types for API responses
 export interface TicketData {
@@ -14,6 +14,11 @@ export interface TicketData {
 export interface RecentTicketsResponse {
   total: number;
   tickets: TicketData[];
+}
+
+export interface TransactionResponse {
+  total: number;
+  bank_transactions: TransactionRecord[];
 }
 
 export interface NoLotteryRecord {
@@ -47,7 +52,13 @@ export const fetchRecentTickets = async (
   startDate: string,
   endDate: string
 ): Promise<RecentTicketsResponse> => {
-  const url = `${API_BASE_URL}/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+
+  
+   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+
+
+  const url =  `${backendUrl}/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+
 
   try {
     const response = await fetch(url, {
@@ -74,7 +85,7 @@ export const fetchNoLotteryRecords = async (
   startDate: string,
   endDate: string
 ): Promise<NoLotteryRecord[]> => {
-  const url = `${API_BASE_URL}/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+  const url = `${API_BASE_URL}/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -100,8 +111,8 @@ export const fetchNoLotteryRecords = async (
 export const fetchAllTransactions = async (
   startDate: string,
   endDate: string
-): Promise<TransactionRecord[]> => {
-  const url = `${API_BASE_URL}/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+): Promise<TransactionResponse> => {
+  const url = `${API_BASE_URL}/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -115,7 +126,7 @@ export const fetchAllTransactions = async (
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data: TransactionRecord[] = await response.json();
+    const data: TransactionResponse = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching all transactions:', error);

@@ -31,7 +31,7 @@ const TransactionsTab: React.FC = () => {
 
     try {
       const data = await fetchAllTransactions(start, end);
-      setTransactions(data);
+      setTransactions(data.bank_transactions);
     } catch (err) {
       setError('Өгөгдөл татахад алдаа гарлаа. Дахин оролдоно уу.');
       console.error('Failed to fetch transactions:', err);
@@ -79,17 +79,6 @@ const TransactionsTab: React.FC = () => {
     return amount.toLocaleString('mn-MN') + '₮';
   };
 
-  // Get transaction type badge color
-  const getTypeColor = (type: string) => {
-    const typeColors: Record<string, string> = {
-      'income': 'bg-emerald-100 text-emerald-800 border-emerald-200',
-      'expense': 'bg-rose-100 text-rose-800 border-rose-200',
-      'refund': 'bg-amber-100 text-amber-800 border-amber-200',
-      'bonus': 'bg-purple-100 text-purple-800 border-purple-200',
-      'default': 'bg-slate-100 text-slate-800 border-slate-200',
-    };
-    return typeColors[type.toLowerCase()] || typeColors['default'];
-  };
 
   // Handle date filter button click
   const handleDateFilter = () => {
@@ -227,9 +216,15 @@ const TransactionsTab: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${getTypeColor(transaction.type)}`}>
-                        <Tag className="w-3 h-3" />
-                        {transaction.type}
+                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                          transaction.type === '1' 
+                            ? 'bg-green-100 text-green-800 border-green-200' 
+                            : transaction.type === '2'
+                            ? 'bg-red-100 text-red-800 border-red-200'
+                            : 'bg-gray-100 text-gray-800 border-gray-200'
+                        }`}>
+                          <Tag className="w-3 h-3" />
+                          {transaction.type === '1' ? 'Орлого' : transaction.type === '2' ? 'Зарлага' : 'Тодорхойгүй'}
                       </span>
                     </td>
                     <td className="px-6 py-4">
