@@ -58,7 +58,7 @@ export const fetchRecentTickets = async (
   "https://www.tumensugalaa.mn";
 
 
-  const url = `${backendUrl}/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+  const url = `${backendUrl}/api/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -89,7 +89,7 @@ export const fetchNoLotteryRecords = async (
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
   "https://www.tumensugalaa.mn";
-  const url = `${backendUrl}/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+  const url = `${backendUrl}/api/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -120,7 +120,7 @@ export const fetchAllTransactions = async (
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
   "https://www.tumensugalaa.mn";
-  const url = `${backendUrl}/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+  const url = `${backendUrl}/api/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -151,7 +151,7 @@ export const fetchRecentPlus100k = async (
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
   "https://www.tumensugalaa.mn";
-  const url = `${backendUrl}/admin/plus_100k?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+  const url = `${backendUrl}/api/admin/plus_100k?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
