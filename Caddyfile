@@ -13,4 +13,15 @@ tumensugalaa.mn, www.tumensugalaa.mn {
       header_up X-Forwarded-Host tumensugalaa.mn  # ← Нэмэх
     }
   }
+
+
+  @admin path /admin*
+  handle @admin {
+    reverse_proxy {$BACKEND_ORIGIN} {
+      header_up Host tumensugalaa.mn
+      header_up X-Forwarded-Proto {scheme}
+      header_up X-Forwarded-For {remote}
+      header_up X-Forwarded-Host tumensugalaa.mn
+    }
+  }
 }
