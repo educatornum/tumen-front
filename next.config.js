@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const isGhPages = process.env.GH_PAGES === 'true';
 
 const nextConfig = {
-  // Removed 'output: export' to enable server-side features
+  output: 'export',
   // Only use basePath/assetPrefix when building for GitHub Pages
   basePath: isGhPages ? `/${repoName}` : '',
   assetPrefix: isGhPages ? `/${repoName}/` : '',
