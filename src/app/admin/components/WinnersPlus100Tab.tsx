@@ -169,13 +169,7 @@ const WinnersPlus100Tab: React.FC = () => {
             <thead>
               <tr className="bg-slate-50 border-b border-slate-200">
                 <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  ID
-                </th>
-                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
                   Гүйлгээний дугаар
-                </th>
-                <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  Төрөл
                 </th>
                 <th className="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">
                   Гүйлгээний огноо
@@ -205,25 +199,10 @@ const WinnersPlus100Tab: React.FC = () => {
                 displayedTransactions.map((transaction) => (
                   <tr key={transaction.id} className="hover:bg-slate-50 transition-colors group">
                     <td className="px-6 py-4">
-                      <span className="text-xs text-slate-400 font-mono">#{transaction.id}</span>
-                    </td>
-                    <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <FileText className="w-4 h-4 text-slate-400" />
                         <span className="text-slate-700 font-medium">{transaction.record_id}</span>
                       </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-                          transaction.type === '1' 
-                            ? 'bg-green-100 text-green-800 border-green-200' 
-                            : transaction.type === '2'
-                            ? 'bg-red-100 text-red-800 border-red-200'
-                            : 'bg-gray-100 text-gray-800 border-gray-200'
-                        }`}>
-                          <Tag className="w-3 h-3" />
-                          {transaction.type === '1' ? 'Орлого' : transaction.type === '2' ? 'Зарлага' : 'Тодорхойгүй'}
-                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2 text-slate-600 text-sm">
