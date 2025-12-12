@@ -1,5 +1,3 @@
-const API_BASE_URL = 'http://localhost:3000';
-
 // Types for API responses
 export interface TicketData {
   id: number;
@@ -9,6 +7,7 @@ export interface TicketData {
   is_bonus: boolean;
   is_used: boolean;
   created_at: string;
+  amount?: number;
 }
 
 export interface RecentTicketsResponse {
@@ -52,13 +51,8 @@ export const fetchRecentTickets = async (
   startDate: string,
   endDate: string
 ): Promise<RecentTicketsResponse> => {
-
-  
-   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
-
-
-  const url =  `${backendUrl}/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const url = `${backendUrl}/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -80,12 +74,13 @@ export const fetchRecentTickets = async (
   }
 };
 
-// Fetch no lottery records (Failed)
+// Fetch no lottery records (Failed) - ЗАСВАРЛАСАН
 export const fetchNoLotteryRecords = async (
   startDate: string,
   endDate: string
-): Promise<NoLotteryRecord[]> => {
-  const url = `${API_BASE_URL}/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+): Promise<TransactionResponse> => {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const url = `${backendUrl}/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -99,7 +94,7 @@ export const fetchNoLotteryRecords = async (
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data: NoLotteryRecord[] = await response.json();
+    const data: TransactionResponse = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching no lottery records:', error);
@@ -112,7 +107,8 @@ export const fetchAllTransactions = async (
   startDate: string,
   endDate: string
 ): Promise<TransactionResponse> => {
-  const url = `${API_BASE_URL}/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const url = `${backendUrl}/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
     const response = await fetch(url, {
@@ -130,6 +126,34 @@ export const fetchAllTransactions = async (
     return data;
   } catch (error) {
     console.error('Error fetching all transactions:', error);
+    throw error;
+  }
+};
+
+// Fetch transactions over 100k - ЗАСВАРЛАСАН
+export const fetchRecentPlus100k = async (
+  startDate: string,
+  endDate: string
+): Promise<TransactionResponse> => {
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const url = `${backendUrl}/admin/plus_100k?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data: TransactionResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching plus 100k transactions:', error);
     throw error;
   }
 };
