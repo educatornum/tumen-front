@@ -12,10 +12,11 @@ import {
 import WinnersTab from './WinnersTab';
 import FailedLotteryTab from './FailedLotteryTab';
 import TransactionsTab from './TransactionsTab';
+import QpayInvoiceTab from './QpayInvoiceTab';
 import WinnersPlus100Tab from './WinnersPlus100Tab';
 
 // Types definition
-type TabType = 'winners' | 'failed' | 'transactions' | 'WinnersPlus100Tab';
+type TabType = 'winners' | 'failed' | 'transactions' | 'WinnersPlus100Tab' | 'Qpayfailed';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('winners');
@@ -36,7 +37,7 @@ const AdminDashboard: React.FC = () => {
     },
     {
       id: 'failed',
-      label: 'Сугалаа олгож чадаагүй',
+      label: 'Сугалаа олгож чадаагүй-шууд данс',
       icon: AlertCircle,
       description: 'Алдаа гарсан болон цуцлагдсан'
     },
@@ -45,6 +46,12 @@ const AdminDashboard: React.FC = () => {
       label: 'Нийт гүйлгээний тайлан',
       icon: FileText,
       description: 'Санхүүгийн нэгдсэн мэдээлэл'
+    },
+     {
+      id: 'Qpayfailed',
+      label: 'Сугалаа олгож чадаагүй-QPAY',
+      icon: FileText,
+      description: 'Алдаа гарсан болон цуцлагдсан'
     },
   ];
 
@@ -56,6 +63,8 @@ const AdminDashboard: React.FC = () => {
         return <WinnersPlus100Tab />;
       case 'failed':
         return <FailedLotteryTab />;
+      case 'Qpayfailed':
+        return <QpayInvoiceTab/>
       case 'transactions':
         return <TransactionsTab />;
       default:

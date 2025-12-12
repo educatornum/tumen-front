@@ -41,6 +41,25 @@ export interface TransactionRecord {
   type: string;
 }
 
+export interface QpayInvoiceData {
+  id: number;
+  invoice_id: string;
+  amount: number;
+  description: string;
+  phone_number: string;
+  status: number;
+  expires_at: string;
+  created_at: string;
+  updated_at: string;
+  sender_invoice_no: string;
+  callback_url: string;
+}
+
+export interface QpayInvoiceResponse {
+  total: number;
+  qpay_invoices: QpayInvoiceData[];
+}
+
 // Format date to YYYY-MM-DD
 const formatDateForApi = (date: string): string => {
   return date; // Already in correct format
@@ -169,6 +188,37 @@ export const fetchRecentPlus100k = async (
     return data;
   } catch (error) {
     console.error('Error fetching plus 100k transactions:', error);
+    throw error;
+  }
+};
+
+// Fetch QPAY Invoices - ШИНЭ НЭМЭГДСЭН
+export const fetchQpayInvoices = async (
+  startDate: string,
+  endDate: string
+): Promise<QpayInvoiceResponse> => {
+  const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  process.env.BACKEND_API_URL ||
+  "https://www.tumensugalaa.mn";
+  const url = `${backendUrl}/api/admin/qpayInvoice?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data: QpayInvoiceResponse = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching QPAY invoices:', error);
     throw error;
   }
 };
