@@ -51,7 +51,13 @@ export const fetchRecentTickets = async (
   startDate: string,
   endDate: string
 ): Promise<RecentTicketsResponse> => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+
+  const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  process.env.BACKEND_API_URL ||
+  "https://www.tumensugalaa.mn";
+
+
   const url = `${backendUrl}/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
@@ -79,7 +85,10 @@ export const fetchNoLotteryRecords = async (
   startDate: string,
   endDate: string
 ): Promise<TransactionResponse> => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  process.env.BACKEND_API_URL ||
+  "https://www.tumensugalaa.mn";
   const url = `${backendUrl}/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
@@ -107,7 +116,10 @@ export const fetchAllTransactions = async (
   startDate: string,
   endDate: string
 ): Promise<TransactionResponse> => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  process.env.BACKEND_API_URL ||
+  "https://www.tumensugalaa.mn";
   const url = `${backendUrl}/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
@@ -135,7 +147,10 @@ export const fetchRecentPlus100k = async (
   startDate: string,
   endDate: string
 ): Promise<TransactionResponse> => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || process.env.BACKEND_API_URL || 'http://localhost:3000';
+  const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL ||
+  process.env.BACKEND_API_URL ||
+  "https://www.tumensugalaa.mn";
   const url = `${backendUrl}/admin/plus_100k?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
