@@ -5,6 +5,7 @@ const isGhPages = process.env.GH_PAGES === 'true';
 
 const nextConfig = {
   output: 'export',
+  trailingSlash:true,
   // Only use basePath/assetPrefix when building for GitHub Pages
   basePath: isGhPages ? `/${repoName}` : '',
   assetPrefix: isGhPages ? `/${repoName}/` : '',
