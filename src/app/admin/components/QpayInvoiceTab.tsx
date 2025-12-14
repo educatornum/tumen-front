@@ -62,9 +62,9 @@ const QpayInvoiceTab: React.FC = () => {
   // Check payment status
   const checkPaymentStatus = async (invoiceId: string) => {
     setCheckingPayment(prev => ({ ...prev, [invoiceId]: true }));
-    
+
     try {
-      const response = await fetch(`https://tumensugalaa.mn/api/invoice/${invoiceId}/check_payment`);
+      const response = await fetch(`/api/invoice/${invoiceId}/check_payment`);
       const data: CheckPaymentResponse = await response.json();
       
       setPaymentResults(prev => ({ ...prev, [invoiceId]: data }));

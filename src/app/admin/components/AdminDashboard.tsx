@@ -84,7 +84,7 @@ const AdminDashboard: React.FC = () => {
         <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800">
           {isSidebarOpen ? (
             <div className="flex items-center gap-2">
-              <img src="images/logo/tumen-logo.png"
+              <img src="/images/logo/tumen-logo.png"
                      alt="logo"
                     width={80}
                     height={45}

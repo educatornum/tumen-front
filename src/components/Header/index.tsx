@@ -69,14 +69,14 @@ const Header = () => {
               >
                 <div>
                   <Image
-                    src="images/logo/tumen-logo.png"
+                    src="/images/logo/tumen-logo.png"
                     alt="logo"
                     width={200}
                     height={150}
                     className="h-16 w-auto sm:h-20 md:h-24 dark:hidden"
                   />
                   <Image
-                    src="images/logo/tumen-logo.png"
+                    src="/images/logo/tumen-logo.png"
                     alt="logo"
                     width={200}
                     height={150}

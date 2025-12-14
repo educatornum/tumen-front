@@ -74,7 +74,7 @@ export const fetchRecentTickets = async (
   const backendUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
-  "https://www.tumensugalaa.mn";
+  "https://tumensugalaa.mn";
 
 
   const url = `${backendUrl}/api/admin/recent?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
@@ -107,7 +107,7 @@ export const fetchNoLotteryRecords = async (
   const backendUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
-  "https://www.tumensugalaa.mn";
+  "https://tumensugalaa.mn";
   const url = `${backendUrl}/api/admin/no_lottory?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
@@ -138,7 +138,7 @@ export const fetchAllTransactions = async (
   const backendUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
-  "https://www.tumensugalaa.mn";
+  "https://tumensugalaa.mn";
   const url = `${backendUrl}/api/admin/alltran?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
@@ -169,7 +169,7 @@ export const fetchRecentPlus100k = async (
   const backendUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
-  "https://www.tumensugalaa.mn";
+  "https://tumensugalaa.mn";
   const url = `${backendUrl}/api/admin/plus_100k?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
@@ -200,7 +200,7 @@ export const fetchQpayInvoices = async (
   const backendUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL ||
   process.env.BACKEND_API_URL ||
-  "https://www.tumensugalaa.mn";
+  "https://tumensugalaa.mn";
   const url = `${backendUrl}/api/admin/qpayInvoice?startdate=${formatDateForApi(startDate)}&enddate=${formatDateForApi(endDate)}`;
 
   try {
