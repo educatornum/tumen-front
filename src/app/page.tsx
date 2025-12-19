@@ -5,7 +5,7 @@ import Pricing from "@/components/Pricing";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Түмэн сугалаанаас",
+  title: "Түмэн сугалаа",
   description: "Tumen sugalaa",
   // other metadata
 };
