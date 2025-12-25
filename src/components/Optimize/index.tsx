@@ -1,36 +1,37 @@
+
+ import React from 'react';
+import { AlertCircle } from 'lucide-react';
+
 export default function MaintenancePage() {
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-900 via-indigo-900 to-slate-900 text-white px-4">
-      <div className="text-center max-w-xl">
-        {/* Icon */}
-        <div className="text-6xl mb-6 animate-pulse">🎄</div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
+          {/* Icon */}
+          <div className="flex justify-center mb-6">
+            <div className="bg-red-500/20 rounded-full p-4">
+              <AlertCircle className="w-16 h-16 text-red-400" />
+            </div>
+          </div>
 
-        {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
-          Түр хүлээнэ үү
-        </h1>
+          {/* Title */}
+          <h1 className="text-3xl font-bold text-white text-center mb-4">
+            Уучлаарай, 
+          </h1>
 
-        {/* Description */}
-        <p className="text-base md:text-lg text-gray-200 mb-6 leading-relaxed">
-          Манай системд төлөвлөгөөт сайжруулалт болон шинэ жилийн
-           уур амьсгал оруулах ажлууд хийгдэж байна.
-          <br />
-          Та түр хүлээнэ үү.
-        </p>
+          {/* Message */}
+          <p className="text-gray-300 text-center mb-8 leading-relaxed">
+            Алдаатай гүйлгээ засагдаж байна. Таны хийсэн гүйлгээ дарааллын дагуу орох болно.
+          </p>
 
-        {/* Divider */}
-        <div className="w-24 h-1 bg-white/30 mx-auto mb-6 rounded-full" />
 
-        {/* Footer message */}
-        <p className="text-sm text-gray-300">
-          🎆 Шинэ оноо угтахад бэлдэж байна 🎆
-        </p>
-
-        {/* Loading dots */}
-        <div className="mt-6 flex justify-center gap-2">
-          <span className="w-2 h-2 bg-white rounded-full animate-bounce" />
-          <span className="w-2 h-2 bg-white rounded-full animate-bounce delay-150" />
-          <span className="w-2 h-2 bg-white rounded-full animate-bounce delay-300" />
+          {/* Additional Info */}
+          <div className="mt-6 pt-6 border-t border-white/10">
+            <p className="text-sm text-gray-400 text-center">
+              90171717
+            </p>
+          </div>
         </div>
       </div>
     </div>
