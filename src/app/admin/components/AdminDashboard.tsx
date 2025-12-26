@@ -47,12 +47,12 @@ const AdminDashboard: React.FC = () => {
       icon: FileText,
       description: 'Санхүүгийн нэгдсэн мэдээлэл'
     },
-     {
-      id: 'Qpayfailed',
-      label: 'Сугалаа олгож чадаагүй-QPAY',
-      icon: FileText,
-      description: 'Алдаа гарсан болон цуцлагдсан'
-    },
+    //  {
+    //   id: 'Qpayfailed',
+    //   label: 'Сугалаа олгож чадаагүй-QPAY',
+    //   icon: FileText,
+    //   description: 'Алдаа гарсан болон цуцлагдсан'
+    // },
   ];
 
   const renderContent = () => {

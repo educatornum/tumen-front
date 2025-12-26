@@ -43,13 +43,13 @@ export default function RootLayout({
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className} ${lobster.variable} ${vollkorn.variable}`}>
         <Providers>
           
-           {/* {!path.includes("admin") && <Header />}  */}
-          <MaintenancePage/>
-          {/* {children} */}
+           {!path.includes("admin") && <Header />} 
+
+          {children}
           
-          {/* <ScrollToTop /> */}
+          <ScrollToTop />
      
-          {/* {!path.includes("admin") &&      <Footer />}   */}
+          {!path.includes("admin") &&      <Footer />}  
         </Providers>
       </body>
     </html>

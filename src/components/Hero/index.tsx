@@ -174,6 +174,128 @@ const CheckLotteryModal = ({ isOpen, onClose }) => {
   );
 };
 
+// ✅ Кодоор сугалаа шалгах Modal - Backend холбогдсон
+const CheckLotteryByCodeModal = ({ isOpen, onClose }) => {
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [ticketData, setTicketData] = useState(null);
+  const [error, setError] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleCodeChange = (val) => {
+    const digits = val.replace(/\D/g, "");
+    if (digits.length <= 6) {
+      setCode(digits);
+      setError(null);
+    }
+  };
+
+  const handleCheck = async () => {
+    if (code.length !== 6) {
+      setError("Код 6 оронтой байх ёстой");
+      return;
+    }
+
+    const codea = parseInt(code, 10);
+    
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:3000';
+      const onGhPages = !!process.env.NEXT_PUBLIC_BASE_PATH;
+      const endpoint = onGhPages ? `${backendUrl}/search/lottery/${codea}` : `/api/search/lottery/${codea}`;
+
+      const response = await fetch(endpoint);
+
+      if (!response.ok) {
+        throw new Error('Хайлт амжилтгүй боллоо');
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setTicketData(data);
+      setSubmitted(true);
+    } catch (err) {
+      setError(err.message || 'Алдаа гарлаа. Дахин оролдоно уу.');
+      console.error('API Error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClose = () => {
+    setCode("");
+    setError(null);
+    setTicketData(null);
+    setSubmitted(false);
+    onClose();
+  };
+
+  return (
+    <Modal isOpen={isOpen} onClose={handleClose}>
+      {!submitted ? (
+        <>
+          <h2 className="text-2xl font-black text-white text-center mb-6">🔍 Кодоор шалгах</h2>
+          <input
+            type="tel"
+            value={code}
+            onChange={(e) => handleCodeChange(e.target.value)}
+            placeholder="123456"
+            className="w-full px-6 py-4 bg-white/10 border border-white/20 rounded-2xl text-white text-center text-xl font-bold placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          <p className="text-xs text-white/60 text-center mt-2">{code.length}/6 орон</p>
+          {error && <p className="text-sm text-red-400 text-center mt-2">{error}</p>}
+          <button
+            onClick={handleCheck}
+            disabled={code.length !== 6 || loading}
+            className="mt-6 w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl font-black text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-100 transition-all"
+          >
+            {loading ? "Шалгаж байна..." : "Шалгах"}
+          </button>
+        </>
+      ) : (
+        <div className="space-y-4">
+          <h2 className="text-2xl font-black text-white text-center mb-4">✅ Сугалааны мэдээлэл</h2>
+
+          <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-xl p-4 border border-purple-400/30">
+            <p className="text-sm text-purple-300">Сугалааны дугаар:</p>
+            <p className="text-3xl font-black text-white">{String(ticketData?.number || code).padStart(6, '0')}</p>
+          </div>
+
+          {ticketData?.phone && (
+            <div className="bg-white/10 rounded-xl p-4 border border-white/20">
+              <p className="text-sm text-white/60">Утасны дугаар:</p>
+              <p className="text-xl font-bold text-white">{ticketData.phone}</p>
+            </div>
+          )}
+
+          {ticketData?.created_at && (
+            <div className="bg-white/10 rounded-xl p-4 border border-white/20">
+              <p className="text-sm text-white/60">Огноо:</p>
+              <p className="text-xl font-bold text-white">
+                {new Date(ticketData.created_at).toLocaleDateString('en-GB').split('/').reverse().join('-')} {new Date(ticketData.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+              </p>
+            </div>
+          )}
+
+          <button
+            onClick={handleClose}
+            className="w-full py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl font-black hover:scale-105 active:scale-100 transition-all"
+          >
+            Хаах
+          </button>
+        </div>
+      )}
+    </Modal>
+  );
+};
+
 // ✅ Сугалаа авах Modal - Payment шалгалттай
 const BuyLotteryModal = ({ isOpen, onClose }) => {
   const [phone, setPhone] = useState("");
@@ -352,13 +474,9 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
                 ))}
               </div>
 
-              <button
-                onClick={handleCheckPayment}
-                disabled={checking}
-                className="w-full py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-bold hover:scale-105 active:scale-100 transition-all disabled:opacity-50"
-              >
-                {checking ? "Шалгаж байна..." : "Төлбөр шалгах"}
-              </button>
+<p className="text-center text-sm text-white-600 mt-4">
+  Гүйлгээ амжилттай хийгдсэн бол 1-2 минутын дараа сугалаагаа шалгана уу
+</p>
             </>
           )}
 
@@ -387,6 +505,7 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
 
 export default function Hero() {
   const [checkModal, setCheckModal] = useState(false);
+  const [checkCodeModal, setCheckCodeModal] = useState(false);
   const [buyModal, setBuyModal] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [counts,setCounts] = useState<number | null>(null);
@@ -433,6 +552,7 @@ export default function Hero() {
   return (
     <>
       <CheckLotteryModal isOpen={checkModal} onClose={() => setCheckModal(false)} />
+      <CheckLotteryByCodeModal isOpen={checkCodeModal} onClose={() => setCheckCodeModal(false)} />
       <BuyLotteryModal isOpen={buyModal} onClose={() => setBuyModal(false)} />
 
       <section className="relative min-h-screen flex items-center justify-center bg-black overflow-hidden">
@@ -493,6 +613,13 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+            <button
+              onClick={() => setCheckCodeModal(true)}
+              className="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
+            >
+              <Camera className="w-5 h-5" /> Кодоор шалгах <ChevronRight className="w-5 h-5" />
+            </button>
+
             <button
               onClick={() => setCheckModal(true)}
               className="px-6 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
