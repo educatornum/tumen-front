@@ -42,7 +42,7 @@ export default function RootLayout({
 
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className} ${lobster.variable} ${vollkorn.variable}`}>
         <Providers>
-          
+           <Snowfall />
            {!path.includes("admin") && <Header />} 
 
           {children}
@@ -59,4 +59,5 @@ export default function RootLayout({
 import { Providers } from "./providers";
 import { usePathname } from "next/navigation";
 import MaintenancePage from "@/components/Optimize";
+import Snowfall from "@/components/Snowfall";
 
