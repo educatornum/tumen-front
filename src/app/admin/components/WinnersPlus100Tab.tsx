@@ -45,22 +45,46 @@ const WinnersPlus100Tab: React.FC = () => {
     loadTransactions(confirmedStartDate, confirmedEndDate);
   }, [confirmedStartDate, confirmedEndDate]);
 
-  // Filter transactions by search term
+  // Group transactions by record_id and filter by search term
   const displayedTransactions = useMemo(() => {
-    if (!searchTerm) return transactions;
+    let filteredTransactions = transactions;
 
-    const lowerCaseSearch = searchTerm.toLowerCase();
-    return transactions.filter(transaction =>
-      transaction.record_id.toLowerCase().includes(lowerCaseSearch) ||
-      transaction.description.toLowerCase().includes(lowerCaseSearch) ||
-      transaction.amount.toString().includes(searchTerm)
-    );
+    // Apply search filter first
+    if (searchTerm) {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+      filteredTransactions = transactions.filter(transaction =>
+        transaction.record_id.toLowerCase().includes(lowerCaseSearch) ||
+        transaction.description.toLowerCase().includes(lowerCaseSearch) ||
+        transaction.amount.toString().includes(searchTerm)
+      );
+    }
+
+    // Group by record_id - show only unique record_id
+    const uniqueMap = new Map<string, TransactionRecord>();
+    filteredTransactions.forEach(transaction => {
+      const existingTransaction = uniqueMap.get(transaction.record_id);
+      // Keep the first occurrence or the one with earlier date
+      if (!existingTransaction) {
+        uniqueMap.set(transaction.record_id, transaction);
+      }
+    });
+
+    return Array.from(uniqueMap.values());
   }, [transactions, searchTerm]);
 
-  // Calculate total amount
+  // Calculate total amount from original transactions (before grouping)
   const totalAmount = useMemo(() => {
-    return displayedTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
-  }, [displayedTransactions]);
+    let filteredTransactions = transactions;
+    if (searchTerm) {
+      const lowerCaseSearch = searchTerm.toLowerCase();
+      filteredTransactions = transactions.filter(transaction =>
+        transaction.record_id.toLowerCase().includes(lowerCaseSearch) ||
+        transaction.description.toLowerCase().includes(lowerCaseSearch) ||
+        transaction.amount.toString().includes(searchTerm)
+      );
+    }
+    return filteredTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+  }, [transactions, searchTerm]);
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -87,17 +111,39 @@ const WinnersPlus100Tab: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4">
-        <div>
+        <div className="w-full">
           <h2 className="text-2xl font-bold text-slate-800">100,000₮+ Гүйлгээнүүд</h2>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              Олдсон: {displayedTransactions.length}
-            </span>
-            <span className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              Нийт дүн: {formatAmount(totalAmount)}
-            </span>
-            <p className="text-slate-500 text-sm">90,000₮-с дээш гүйлгээнүүд</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+            <div className="flex items-center gap-4 bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
+              <div className="bg-emerald-600 rounded-full p-2">
+                <Tag className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-emerald-700">
+                  {displayedTransactions.length}
+                </span>
+                <span className="text-xs text-emerald-600 font-medium uppercase tracking-wide">
+                  Олдсон тоо
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
+              <div className="bg-blue-600 rounded-full p-2">
+                <DollarSign className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-blue-700">
+                  {formatAmount(totalAmount)}
+                </span>
+                <span className="text-xs text-blue-600 font-medium uppercase tracking-wide">
+                  Нийт дүн
+                </span>
+              </div>
+            </div>
           </div>
+          <p className="text-slate-600 text-base font-medium mt-3 ml-1">
+            100,000₮-с дээш гүйлгээнүүд
+          </p>
         </div>
       </div>
 

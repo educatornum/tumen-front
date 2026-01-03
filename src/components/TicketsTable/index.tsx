@@ -126,8 +126,7 @@ export default function TicketsTable() {
           </h2>
           <div className="mt-4 mx-auto bg-yellow-50 border border-yellow-300 rounded-lg p-3 shadow-md">
             <p className="text-sm font-medium text-yellow-800 flex items-start justify-center text-left">
-              <span className="text-xl mr-2 mt-0.5" role="img" aria-label="warning">⚠️</span>
-              АНХААРУУЛГА: Манай систем шинэчлэгдсэнтэй холбоотойгоор мессежээр сугалааны код илгээгдэхгүй. Та доорх талбараас сугалаагаа шалгана уу.
+             ⚠️ АНХААРУУЛГА: Манай систем шинэчлэгдсэнтэй холбоотойгоор мессежээр сугалааны код илгээгдэхгүй.
             </p>
           </div>
         </div>

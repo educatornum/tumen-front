@@ -24,7 +24,7 @@ const Footer = () => {
     const inputHash = await sha256(input);
 
     if (inputHash === ADMIN_PASSWORD_HASH) {
-      router.push("/admin");
+      router.push("https://tumensugalaa.mn/admin");
     } else {
       alert("Нууц үг буруу байна!");
     }

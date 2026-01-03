@@ -76,17 +76,39 @@ const WinnersTab: React.FC = () => {
   return (
     <div className="space-y-6 animate-fadeIn">
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4">
-        <div>
+        <div className="w-full">
           <h2 className="text-2xl font-bold text-slate-800">Сугалаа авсан харилцагчид</h2>
-          <div className="flex items-center gap-2 mt-1">
-            <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              Олдсон: {displayedTickets.length}
-            </span>
-            <span className="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-medium">
-              Нийт: {totalCount}
-            </span>
-            <p className="text-slate-500 text-sm">Сугалааны оролцогчид</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+            <div className="flex items-center gap-4 bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4">
+              <div className="bg-emerald-600 rounded-full p-2">
+                <CheckCircle2 className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-emerald-700">
+                  {displayedTickets.length}
+                </span>
+                <span className="text-xs text-emerald-600 font-medium uppercase tracking-wide">
+                  Олдсон тоо
+                </span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
+              <div className="bg-blue-600 rounded-full p-2">
+                <Star className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-blue-700">
+                  {totalCount}
+                </span>
+                <span className="text-xs text-blue-600 font-medium uppercase tracking-wide">
+                  Нийт тоо
+                </span>
+              </div>
+            </div>
           </div>
+          <p className="text-slate-600 text-base font-medium mt-3 ml-1">
+            Сугалааны оролцогчид
+          </p>
         </div>
       </div>
 

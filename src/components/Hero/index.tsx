@@ -73,7 +73,7 @@ const CheckLotteryModal = ({ isOpen, onClose }) => {
       const response = await fetch(endpoint);
       
       if (!response.ok) {
-        throw new Error('Хайлт амжилтгүй боллоо');
+        throw new Error('Та LEXUS 570 сугалаанд хамрагдаагүй эсвэл гүйлгээний утга дахь утасны дугаараа шалгана уу..');
       }
       
       const data = await response.json();
@@ -513,7 +513,7 @@ export default function Hero() {
   
 
 
-  const TOTAL_LOTTERY = 7999;
+  const TOTAL_LOTTERY = 15999;
 
    const fetchCounts = async () => {
     try {
@@ -569,12 +569,10 @@ export default function Hero() {
         `}</style>
 
         {/* --- Hanging Christmas Lights --- */}
-        <div className="absolute top-0 left-0 right-0 z-30 flex justify-center space-x-8 sm:space-x-12 pointer-events-none">
+        {/* <div className="absolute top-0 left-0 right-0 z-30 flex justify-center space-x-8 sm:space-x-12 pointer-events-none">
           {[...Array(12)].map((_, i) => (
             <div key={i} className="relative">
-              {/* Wire */}
               <div className="absolute top-0 left-1/2 w-0.5 h-8 bg-gray-700 -translate-x-1/2"></div>
-              {/* Bulb */}
               <div 
                 className={`christmas-light w-4 h-6 rounded-full mt-8 ${
                   ['bg-red-500', 'bg-yellow-400', 'bg-green-500', 'bg-blue-500'][i % 4]
@@ -583,13 +581,13 @@ export default function Hero() {
               ></div>
             </div>
           ))}
-        </div>
+        </div> */}
         {/* ------------------------------------------- */}
 
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-300"
           style={{ 
-            backgroundImage: "url('images/hero/prado150.jpg')",
+            backgroundImage: "url('images/hero/570.jpg')",
             transform: `translate(${mousePos.x * 0.009}px, ${mousePos.y * 0.009}px) scale(1.05)`,
             filter: "brightness(0.35)"
           }}
@@ -638,7 +636,7 @@ export default function Hero() {
           <div className="max-w-2xl mx-auto mb-8 px-2 sm:px-0">
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 shadow-2xl">
               <div className="flex  sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3 sm:mb-4">
-                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт PRADO-150</span>
+                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт LEXUS 570</span>
                 <span className="text-xl sm:text-2xl lg:text-3xl font-black text-red-500">{ counts != null ? (counts / TOTAL_LOTTERY * 100).toFixed(2) + '%' : '0%'}</span>
               </div>
 
