@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   AlertCircle,
   FileText,
@@ -17,8 +18,52 @@ import WinnersPlus100Tab from './WinnersPlus100Tab';
 type TabType = 'winners' | 'failed' | 'transactions' | 'WinnersPlus100Tab' | 'Qpayfailed';
 
 const AdminDashboard: React.FC = () => {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<TabType>('winners');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = localStorage.getItem("adminAuthenticated");
+      const authTime = localStorage.getItem("adminAuthTime");
+
+      if (authStatus === "true" && authTime) {
+        const authTimestamp = parseInt(authTime);
+        const now = Date.now();
+        const oneHour = 60 * 60 * 1000;
+
+        if (now - authTimestamp < oneHour) {
+          setIsAuthenticated(true);
+          setIsLoading(false);
+        } else {
+          localStorage.removeItem("adminAuthenticated");
+          localStorage.removeItem("adminAuthTime");
+          router.push("/");
+        }
+      } else {
+        router.push("/");
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-slate-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto"></div>
+          <p className="mt-4 text-slate-600">Уншиж байна...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const menuItems = [
     {
