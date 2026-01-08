@@ -662,7 +662,7 @@ export default function Hero() {
               return (
                 <div key={i} className="p-4 bg-black/50 rounded-2xl border border-white/20 backdrop-blur-sm">
                   <Icon className="w-6 h-6 mx-auto mb-2 text-white opacity-70" />
-                  <div className={`text-2xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                  <div className={`text-xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                     {stat.number}
                   </div>
                   <div className="text-xs text-gray-300 uppercase font-bold">{stat.label}</div>

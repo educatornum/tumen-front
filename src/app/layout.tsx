@@ -42,7 +42,7 @@ export default function RootLayout({
 
       <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className} ${lobster.variable} ${vollkorn.variable}`}>
         <Providers>
-           <Snowfall />
+           {/* <Snowfall /> */}
            {!path.includes("admin") && <Header />} 
 
           {children}
