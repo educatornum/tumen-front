@@ -132,7 +132,7 @@ export default function TicketsTable() {
         </div>
 
         {/* Search */}
-        <div className="p-4 border border-orange-200 rounded-xl bg-white shadow mb-6">
+        {/* <div className="p-4 border border-orange-200 rounded-xl bg-white shadow mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-400" />
             <input 
@@ -146,7 +146,7 @@ export default function TicketsTable() {
               <button onClick={()=>setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-orange-400 hover:text-orange-600 text-sm">✕</button>
             )}
           </div>
-        </div>
+        </div> */}
 
         {/* List */}
         <div className="bg-white border border-orange-200 rounded-2xl shadow">

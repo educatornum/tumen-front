@@ -73,7 +73,7 @@ const CheckLotteryModal = ({ isOpen, onClose }) => {
       const response = await fetch(endpoint);
       
       if (!response.ok) {
-        throw new Error('Та LEXUS 570 сугалаанд хамрагдаагүй эсвэл гүйлгээний утга дахь утасны дугаараа шалгана уу..');
+        throw new Error('Та сугалаанд хамрагдаагүй эсвэл гүйлгээний утга дахь утасны дугаараа шалгана уу..');
       }
       
       const data = await response.json();
@@ -587,7 +587,7 @@ export default function Hero() {
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-300"
           style={{ 
-            backgroundImage: "url('images/hero/570.jpg')",
+            backgroundImage: "url('images/hero/300.jpg')",
             transform: `translate(${mousePos.x * 0.009}px, ${mousePos.y * 0.009}px) scale(1.05)`,
             filter: "brightness(0.35)"
           }}
