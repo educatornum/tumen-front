@@ -587,7 +587,7 @@ export default function Hero() {
         <div 
           className="absolute inset-0 bg-cover bg-center transition-transform duration-300"
           style={{ 
-            backgroundImage: "url('images/hero/300.jpg')",
+            backgroundImage: "url('images/hero/300.png')",
             transform: `translate(${mousePos.x * 0.009}px, ${mousePos.y * 0.009}px) scale(1.05)`,
             filter: "brightness(0.35)"
           }}
