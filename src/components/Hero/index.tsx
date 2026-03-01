@@ -412,7 +412,7 @@ const BuyLotteryModal = ({ isOpen, onClose }) => {
               >
                 <div className="text-2xl font-black text-white">{pkg.label}</div>
                 <div className="text-sm text-white/70">{pkg.tickets}</div>
-                {pkg.popular && <div className="text-xs text-yellow-400 mt-1">⭐ Аялалын эрх</div>}
+                {/* {pkg.popular && <div className="text-xs text-yellow-400 mt-1">⭐ Магадлал өндөр</div>} */}
               </button>
             ))}
           </div>
@@ -513,7 +513,7 @@ export default function Hero() {
   
 
 
-  const TOTAL_LOTTERY = 15999;
+  const TOTAL_LOTTERY = 16999;
 
    const fetchCounts = async () => {
     try {
