@@ -36,6 +36,7 @@ export default function RootLayout({
       {/*
       */}
       <head>
+        <meta name="google-site-verification" content="SdCr2DpRsxxAeN--Bihtumi0W_9mqmslydhjps_bdJY" />
         <link rel="icon" href="/images/logo/tumen-logo.png" />
         <link rel="apple-touch-icon" href="/images/logo/tumen-logo.png" />
       </head>
