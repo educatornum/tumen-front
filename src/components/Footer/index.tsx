@@ -100,7 +100,7 @@ const Footer = () => {
           <div className="text-center md:text-right">
             <p className="text-sm text-gray-500">90171717</p>
             <p className="text-xs text-gray-400 mt-1">
-              © 2025 Tumen Sugalaa. Бүх эрх хуулиар хамгаалагдсан.
+              © 2026 Tumensugalaa.mn — By Meirmen International LLC
             </p>
           </div>
 
