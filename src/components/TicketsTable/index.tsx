@@ -54,7 +54,14 @@ export default function TicketsTable() {
         throw new Error(data.error);
       }
 
-      setTicketsData(data);
+      const masked = {
+        ...data,
+        tickets: data.tickets.map((t: Ticket) => ({
+          ...t,
+          phone_number: t.phone_number.slice(0, -2) + "**",
+        })),
+      };
+      setTicketsData(masked);
     } catch (err: any) {
       setError(err.message || 'Алдаа гарлаа');
       console.error('Error fetching tickets:', err);

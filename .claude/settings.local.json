@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh run list:*)"
+      "Bash(gh run list:*)",
+      "Bash(printf '%s' 'admin@2026')",
+      "Bash(shasum -a 256)",
+      "Read(//Users/bayanbayar/Desktop/github_projects/tumen-front/**)",
+      "Bash(printf '%s' 'Tumensugalaa@88111197')",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

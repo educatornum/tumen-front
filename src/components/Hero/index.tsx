@@ -611,12 +611,7 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <button
-              onClick={() => setCheckCodeModal(true)}
-              className="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
-            >
-              <Camera className="w-5 h-5" /> Кодоор шалгах <ChevronRight className="w-5 h-5" />
-            </button>
+        
 
             <button
               onClick={() => setCheckModal(true)}

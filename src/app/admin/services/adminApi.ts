@@ -65,6 +65,14 @@ const formatDateForApi = (date: string): string => {
   return date; // Already in correct format
 };
 
+const getAuthHeaders = (): Record<string, string> => {
+  const token = typeof window !== "undefined" ? sessionStorage.getItem("adminToken") : null;
+  return {
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+};
+
 // Fetch recent tickets (Winners)
 export const fetchRecentTickets = async (
   startDate: string,
@@ -82,9 +90,7 @@ export const fetchRecentTickets = async (
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -113,9 +119,7 @@ export const fetchNoLotteryRecords = async (
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -144,9 +148,7 @@ export const fetchAllTransactions = async (
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -175,9 +177,7 @@ export const fetchRecentPlus100k = async (
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {
@@ -206,9 +206,7 @@ export const fetchQpayInvoices = async (
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),
     });
 
     if (!response.ok) {

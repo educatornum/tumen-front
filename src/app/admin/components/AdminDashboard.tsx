@@ -26,24 +26,23 @@ const AdminDashboard: React.FC = () => {
 
   useEffect(() => {
     const checkAuth = () => {
-      const authStatus = localStorage.getItem("adminAuthenticated");
-      const authTime = localStorage.getItem("adminAuthTime");
+      const token = sessionStorage.getItem("adminToken");
+      const tokenTime = sessionStorage.getItem("adminTokenTime");
 
-      if (authStatus === "true" && authTime) {
-        const authTimestamp = parseInt(authTime);
-        const now = Date.now();
+      if (token && tokenTime) {
+        const elapsed = Date.now() - parseInt(tokenTime);
         const oneHour = 60 * 60 * 1000;
 
-        if (now - authTimestamp < oneHour) {
+        if (elapsed < oneHour) {
           setIsAuthenticated(true);
           setIsLoading(false);
         } else {
-          localStorage.removeItem("adminAuthenticated");
-          localStorage.removeItem("adminAuthTime");
-          router.push("/");
+          sessionStorage.removeItem("adminToken");
+          sessionStorage.removeItem("adminTokenTime");
+          router.push("/admin/login");
         }
       } else {
-        router.push("/");
+        router.push("/admin/login");
       }
     };
 
