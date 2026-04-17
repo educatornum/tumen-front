@@ -157,6 +157,12 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
+              <Link
+                href="/terms"
+                className="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium text-white backdrop-blur-sm hover:bg-white/20 transition-colors whitespace-nowrap"
+              >
+                Үйлчилгээний нөхцөл
+              </Link>
             </div>
           </div>
         </div>
