@@ -75,7 +75,7 @@ const content = {
 
 3.7 Сугалаа зохион байгуулах, түүний дүрэм:
 
-3.7.1 Хонжворын тохиролтой сугалааны ялагчийг Компани цэвэр тохиолдлын, санамсаргүй аргаар шалгаруулах бөгөөд үүнд холбогдох хөгжүүлэлт, алгоритмыг Апп-д хийнэ.
+3.7.1 Хонжворын тохиролтой сугалааны ялагчийг Компани Монгол Улсын хууль тогтоомжийн дагуу шударга, ил тод байдлаар, цэвэр тохиолдлын санамсаргүй аргаар шалгаруулах бөгөөд үүнд холбогдох хөгжүүлэлт, алгоритмыг Апп-д хийнэ.
 3.7.2 Хонжворын тохиролтой сугалааг тодорхой хугацааны давтамжтайгаар хонжворын сан бүрдмэгц 24-48 цагийн дотор зохион байгуулж, ялагчийг олон нийтийн сүлжээний Tumen Sugalaa хаягаар шууд дамжуулалтаар тодруулна.
 3.7.3 Хонжворын тохиролтой сугалаа явагдах хугацаанд хонжворын сан бүрдээгүй нөхцөлд Компани сугалааны хугацааг сунгаж болох ба энэ тохиолдолд Хэрэглэгчдэд Апп-аар мэдээлнэ.
 3.7.4 Компани өөрийн дүрмээр олон нийтийн ТВ сувгаар тодруулах сугалааг тодорхойлж, харилцагчид мэдээлнэ.
@@ -167,7 +167,13 @@ const content = {
 9.3.1 Лавлах 90171717 утасны дугаарт холбогдох;
 9.3.2 munkhbayar@tumensugalaa.mn цахим шуудан руу мейл ирүүлэх;
 9.3.3 TUMEN SUGALAA албан ёсны сошиал (facebook, instagram) сувагт хандах;
-9.3.4 Компанийн байранд биечлэн ирэх.`,
+9.3.4 Компанийн байранд биечлэн ирэх.
+
+10. APPLE-Д ХАМААРАЛГҮЙ БОЛОХ
+
+10.1 Apple Inc. нь энэхүү аппликэйшнд зохион байгуулагдах аливаа тэмцээн, хонжворт сугалааны ивээн тэтгэгч биш бөгөөд тэдгээртэй ямар нэг байдлаар холбогдоогүй болно.
+
+10.2 Энэхүү Апп болон түүн дотор зохион байгуулагдах сугалаа, тэмцээнтэй холбоотой бүхий л үүрэг, хариуцлагыг зөвхөн Компани хүлээх ба Apple Inc. ямар ч хариуцлага хүлээхгүй.`,
   },
   en: {
     title: '"TUMEN SUGALAA" PRIZE LOTTERY TERMS OF SERVICE',
@@ -241,7 +247,7 @@ const content = {
 
 3.7 Lottery organization and rules:
 
-3.7.1 The Company shall determine the winners of prize-matching lotteries through purely random methods, and the relevant development and algorithms shall be implemented in the App.
+3.7.1 The Company shall determine the winners of prize-matching lotteries fairly and transparently in accordance with the laws of Mongolia, through purely random methods, and the relevant development and algorithms shall be implemented in the App.
 3.7.2 Prize-matching lotteries shall be organized within 24-48 hours after the prize pool is formed at regular intervals, and winners shall be announced via live broadcast on the Tumen Sugalaa social media accounts.
 3.7.3 If the prize pool has not been formed by the scheduled time for a prize-matching lottery, the Company may extend the lottery period and will notify Users through the App.
 3.7.4 The Company shall determine by its own rules which lotteries will be announced on public TV channels and will inform customers.
@@ -333,7 +339,13 @@ const content = {
 9.3.1 Contact the helpline at 90171717;
 9.3.2 Send an email to munkhbayar@tumensugalaa.mn;
 9.3.3 Contact TUMEN SUGALAA's official social media accounts (Facebook, Instagram);
-9.3.4 Visit the Company's premises in person.`,
+9.3.4 Visit the Company's premises in person.
+
+10. APPLE DISCLAIMER
+
+10.1 Apple Inc. is not a sponsor of any contest or sweepstakes organized within this application, and is not affiliated with them in any way.
+
+10.2 The Company is solely responsible for this App and any lotteries or contests organized within it, and Apple Inc. shall bear no responsibility whatsoever.`,
   },
 };
 
