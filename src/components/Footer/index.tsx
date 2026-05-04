@@ -25,6 +25,21 @@ const Footer = () => {
             </h3>
           </div>
 
+          <div className="flex gap-4 mb-4 md:mb-0">
+            <button
+              onClick={() => router.push("/terms")}
+              className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white cursor-pointer"
+            >
+              Үйлчилгээний нөхцөл
+            </button>
+            <button
+              onClick={() => router.push("/privacy")}
+              className="text-sm text-gray-500 hover:text-gray-900 dark:hover:text-white cursor-pointer"
+            >
+              Нууцлалын бодлого
+            </button>
+          </div>
+
           <div className="text-center md:text-right">
             <p className="text-sm text-gray-500">90171717</p>
             <p className="text-xs text-gray-400 mt-1">

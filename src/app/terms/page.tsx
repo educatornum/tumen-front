@@ -1,129 +1,12 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const sections = [
-  {
-    title: '"ТҮМЭН" ХОНЖВОРТ СУГАЛААНЫ НУУЦЛАЛЫН БОДЛОГО',
-    date: "Батлагдсан огноо: 2025 оны 11-р сарын 14-ний өдөр",
-    content: `1. ЕРӨНХИЙ НӨХЦӨЛ
-
-1.1 Бид TUMEN SUGALAA аппликэйшн ("Апп" гэх)-д бүртгэлтэй Хэрэглэгчийн хувийн мэдээллийн халдашгүй байдлыг хамгаалах зарчмыг баримталж, Таны цахимаар олгосон зөвшөөрлийн үндсэн дээр хувийн мэдээллийг цуглуулж, боловсруулж, ашиглана.
-
-1.2 Энэхүү Нууцлалын бодлого нь Монгол Улсын Хүний хувийн мэдээлэл хамгаалах тухай хуульд нийцүүлэн Хэрэглэгчийн хувийн мэдээллийг цуглуулах, боловсруулах, ашиглахтай холбоотой харилцааг зохицуулна.
-
-1.3 Нууцлалын бодлогод заасан дараах нэр томьёог дор дурдсан утгаар ойлгож, хэрэглэнэ:
-
-1.3.1 "Хэрэглэгч" эсхүл "Та" гэж Үйлчилгээний нөхцөлийг хүлээн зөвшөөрч, Апп-ыг ашиглаж буй хувь хүнийг;
-
-1.3.2 "Мэдээлэл хариуцагч" эсхүл "Бид" гэж Хэрэглэгчээс олгосон цахим зөвшөөрлийн үндсэн дээр мэдээллийг цуглуулж, боловсруулж, ашиглаж буй компанийг;
-
-1.3.3 "Мэдээлэл цуглуулах" гэж мэдээллийг олж авах, бүрдүүлэх, бүртгэх үйл ажиллагааг;
-
-1.3.4 "Мэдээлэл боловсруулах" гэж мэдээллийг ангилах, хадгалах, дүн шинжилгээ хийх, Хэрэглэгчийн хүсэлтээр өөрчлөх, устгах, сэргээх үйл ажиллагаа тэдгээрийн нийлбэрийг;
-
-1.3.5 "Мэдээлэл ашиглах" гэж мэдээллийг үйл ажиллагаандаа хэрэглэх, дамжуулах, мэдээлэлтэй танилцахыг;
-
-1.3.6 "Хэрэглэгчийг тодорхойлох боломжгүй болгох" гэж мэдээллийг тухайн хүнд хамааруулах боломжгүй болгох буюу хувь хүнийг шууд нэрлэн заах боломжгүй болгохыг.
-
-1.4 Хэрэглэгч Апп-д бүртгүүлэхээс өмнө энэхүү "Нууцлалын бодлого"-той бүрэн танилцах үүрэгтэй. Та Нууцлалын бодлогод заасны дагуу өөрийн хувийн мэдээллийг цуглуулах, боловсруулах, ашиглах зөвшөөрлийг Бидэнд олгох эсэхийг бие даан шийдвэрлэнэ үү.
-
-1.5 Та "Нууцлалын бодлого"-д заасан нөхцөлүүдийг бүрэн хүлээн зөвшөөрч "Би хүлээн зөвшөөрч байна" гэсэн хэсгийг дарж, идэвхжүүлснээр өөрийн хувийн мэдээллийг цуглуулах, боловсруулах, ашиглах цахим зөвшөөрлийг Мэдээлэл хариуцагчид олгосонд тооцно.
-
-1.6 Хэрэв Та "Нууцлалын бодлого"-ыг хүлээн зөвшөөрөхөөс татгалзсан тохиолдолд Апп-г ашиглахгүй байхыг танд зөвлөж байна. Бидэнд татгалзаж буй нөхцөл, тайлбарыг цахимаар илгээж, саналаа шийдвэрлүүлэх эрхтэй.
-
-1.7 Мэдээлэл хариуцагч Таны хандах эрхийг ашиглан Апп-д нэвтрэх боломжгүй болохыг анхааруулж байна. Хэрэглэгч нэвтрэх эрхээ бусдад алдсанаас үүдэлтэй үүссэн аливаа хор, хохирлыг Бид хариуцахгүй болно.
-
-1.8 Энэхүү "Нууцлалын бодлого"-оор зохицуулаагүй харилцааг Монгол Улсын Хүний хувийн мэдээлэл хамгаалах тухай хуулиар зохицуулна.
-
-2. БИДНИЙ БАРИМТАЛДАГ ЗАРЧИМ
-
-2.1 Бид Хэрэглэгчийн хувийн халдашгүй байдлыг хүндэтгэх бөгөөд хуульд заасан журам, Нууцлалын бодлогод зааснаас өөр байдлаар хувийн мэдээллийг цуглуулахгүй, боловсруулахгүй, ашиглахгүй.
-
-2.2 Хэрэглэгчийн мэдээллийн халдашгүй байдлыг хангах хүрээнд мэдээллийн үнэн зөв, бүрэн байдлыг алдагдахгүйгээр хадгалж, хамгаална.
-
-2.3 Хэрэглэгчийн хувийн мэдээлэл цуглуулах, боловсруулах, ашиглах, аюулгүй байдлыг хангахтай холбоотой хууль тогтоомжид нэмэлт, өөрчлөлт орох бүрд энэхүү "Нууцлалын бодлого"-д холбогдох өөрчлөлт, шинэчлэлтийг оруулна.
-
-3. МЭДЭЭЛЭЛ ЦУГЛУУЛАХ, БОЛОВСРУУЛАХ, АШИГЛАХ ҮНДЭСЛЭЛ, ЗОРИЛГО
-
-3.1 Бид дараах зорилгоор Танаас олгосон цахим зөвшөөрлийн үндсэн дээр хувийн мэдээллийг цуглуулж, боловсруулж, ашиглана:
-
-3.1.1 Бүртгэл үүсгэх, баталгаажуулах;
-3.1.2 Хэрэглэгчийг таньж баталгаажуулах (KYC);
-3.1.3 Сугалаа зохион байгуулах, сугалааны тохирлын мэдээлэл илгээх, сугалаанд оролцох, хонжвор олгох үйл ажиллагаанд;
-3.1.4 Мэдээллийн бүрэн бүтэн байдлыг хангах;
-3.1.5 Апп-ны найдвартай хэвийн ажиллагааг хангах, систем хөгжүүлэлтийг тасралтгүй гүйцэтгэх;
-3.1.6 Хэрэглэгчийн хүсэл сонирхолд нийцсэн, энгийн, хялбар шийдэл бүхий бүтээгдэхүүн үйлчилгээг санал болгох;
-3.1.7 Үйлчилгээг сайжруулах, өргөжүүлэх зорилгоор "Meirmen International" ХХК-ийн хамтрагч байгууллагууд, үйлчилгээ үзүүлэгчид, интеграци, хамтран ажиллах гэрээт байгууллагад хуваалцах;
-3.1.8 Сугалаа худалдан авсан НӨАТ-ын баримт илгээх.
-
-3.2 Мэдээлэл хариуцагч Хэрэглэгчийн хувийн мэдээллийг арилжих, худалдах зорилгоор цуглуулж, боловсруулж, ашиглахгүй болно.
-
-4. МЭДЭЭЛЭЛ ХАРИУЦАГЧ, ТҮҮНТЭЙ ХОЛБОО БАРИХ МЭДЭЭЛЭЛ
-
-4.1 Хэрэглэгчээс олгосон цахим зөвшөөрлийн үндсэн дээр хувийн мэдээллийг цуглуулах, боловсруулах, ашиглах эрх бүхий этгээд буюу мэдээлэл хариуцагч нь Монгол Улсын Компанийн тухай хуулийн дагуу үүсгэн байгуулагдсан "Meirmen International" ХХК байна.
-
-4.2 Та Нууцлалын бодлогод заасан нөхцөл, хэрэгжилттэй холбоотой асуудлаар munkhbayar@tumensugalaa.mn цахим шуудан эсхүл бичгээр санал, хүсэлт, гомдлоо илгээж шийдвэрлүүлэх эрхтэй.
-
-5. ЦУГЛУУЛАХ, БОЛОВСРУУЛАХ, АШИГЛАХ МЭДЭЭЛЛИЙН ЖАГСААЛТ
-
-5.1 Хэрэглэгчийн дараах мэдээллийг цуглуулж, боловсруулж, ашиглана:
-
-5.1.1 Бүртгэл үүсгэхэд хамаарах мэдээлэл: Овог, нэр, иргэний бүртгэлийн дугаар/регистрийн дугаар, хүйс, утасны дугаар, цахим хаяг, банкны дансны дугаар.
-
-5.1.2 Хэрэглэгчийг таньж баталгаажуулахад хамаарах мэдээлэл: Овог, нэр, регистрийн дугаар, нас, хүйс, фото зураг, мэйл хаяг, банкны дансны дугаар, оршин суугаа хаяг, хэрэглэгчийн оролцсон сугалааны мэдээлэл, хонжворын мэдээлэл, хэтэвчийн шилжүүлэг, гүйлгээний мэдээлэл, төхөөрөмжийн мэдээлэл.
-
-5.1.3 Мэдээллийн бүрэн бүтэн байдлыг хангахад хамаарах мэдээлэл: Нэвтэрсэн, гарсан цаг, төхөөрөмжийн бүртгэл, байршлын мэдээлэл, санал хүсэлт, гомдлын мэдээлэл, аудио бичлэг.
-
-5.1.4 Мэдээллийн системийг хөгжүүлэх, үйлчилгээний шинэ шийдлийг нэвтрүүлэхэд чиглэсэн мэдээлэл: Сугалааны тохирлын мэдээлэл, хэтэвчний мэдээлэл, cookie файлын мэдээлэл.
-
-5.1.5 Баримт илгээхэд хамаарах мэдээлэл: Цахим хаяг, төлбөрийн баримт, төлбөрийн түүх.
-
-5.2 Мэдээлэл хариуцагч нь энэ бүлэгт зааснаас өөр мэдээллийг цуглуулж, боловсруулж, ашиглах тохиолдолд "Нууцлалын бодлого"-д нэмэлт, өөрчлөлт оруулж, Хэрэглэгчээс цахим зөвшөөрлийг авна.
-
-6. МЭДЭЭЛЭЛ БОЛОВСРУУЛАХ, АШИГЛАХ ХУГАЦАА
-
-6.1 Хэрэглэгч цахим зөвшөөрлийг олгосноор Мэдээлэл хариуцагч нь хувийн мэдээллийг цуглуулж, боловсруулж, ашиглана.
-
-6.2 Мэдээлэл хариуцагч нь Хэрэглэгчийг Апп-д бүртгүүлснээс эхлээд бүртгэлийг идэвхгүй болгох, хаах шийдвэр гарах хүртэл хугацаанд мэдээллийг боловсруулж, ашиглана.
-
-6.3 Мэдээлэл хариуцагч Хэрэглэгчийн системд оруулсан мэдээллийг өөрийн серверт хадгална.
-
-6.4 Хэрэглэгчийн хувийн мэдээллийг Мэдээлэл хариуцагч нь дор хаяж 12 (арван хоёр) сарын хугацаанд хадгалж, хадгалах хугацаа дууссан мэдээллийг устгана.
-
-7. МЭДЭЭЛЛИЙГ НИЙТЭД ИЛ БОЛГОХ НӨХЦӨЛ
-
-7.1 Монгол Улсын хуульд заасан тохиолдолд эрх бүхий байгууллагын шаардлагаар Хэрэглэгчийн мэдээллийг нийтэд ил болгоно.
-
-7.2 Мэдээлэл хариуцагч нь 7.1-д зааснаас бусад тохиолдолд Хэрэглэгчийн хувийн мэдээллийг нийтэд ил болгохгүй, түүний халдашгүй байдлыг хамгаална.
-
-8. МЭДЭЭЛЛИЙГ ДАМЖУУЛАХ НӨХЦӨЛ
-
-8.1 Мэдээлэл хариуцагч нь дараах тохиолдолд Таны хувийн мэдээллийг бусад этгээдэд дамжуулна:
-
-8.1.1 Монгол Улсын шүүхийн шүүгчийн захирамж гарсан;
-8.1.2 Прокурорын тогтоол гарсан;
-8.1.3 Хууль сахиулах байгууллагын шаардлагаар мөрдөгчийн саналыг прокурор зөвшөөрсөн албан тоотыг үндэслэн.
-
-9. ХЭРЭГЛЭГЧИЙН ХУВИЙН ХАЛДАШГҮЙ БАЙХ ЭРХИЙН ХАМГААЛАЛТ
-
-9.1 Хэрэглэгч хувийн халдашгүй байх эрхээ хэрэгжүүлэх хүрээнд өөрийн олгосон хувийн мэдээллийг цуглуулах, боловсруулах, ашиглах цахим зөвшөөрлийг цуцлах хүсэлтийг цахим хэлбэрээр Мэдээлэл хариуцагчид илгээнэ.
-
-9.2 Мэдээлэл хариуцагч нь зөвшөөрөл цуцлах хүсэлтийг хүлээн авснаас хойш ажлын 20 (хорь) хоногт багтаан хүсэлтийг шийдвэрлэж, Хэрэглэгчид хариу мэдэгдэнэ.
-
-9.3 Хэрэглэгчийн мэдээллийг цуглуулах, боловсруулах, ашиглах цахим зөвшөөрөл цуцлагдсан тохиолдолд Мэдээлэл хариуцагч нь түүний мэдээллийг боловсруулахгүй, ашиглахгүй, цаашид дахин цуглуулахгүй ба Хэрэглэгчийн бүртгэлийг идэвхгүй болно.
-
-9.4 Кибер халдлага болон бусад шалтгаанаар Таны хувийн мэдээлэл алдагдсан тохиолдолд Мэдээлэл хариуцагчаас таны бүртгүүлсэн имэйл хаяг, гар утасны дугаарт нэн даруй мэдэгдэл хүргүүлнэ.
-
-10. НУУЦЛАЛЫН БОДЛОГЫН НЭМЭЛТ, ӨӨРЧЛӨЛТ
-
-10.1 Мэдээлэл хариуцагч Нууцлалын бодлогод нэмэлт, өөрчлөлт оруулах эрхтэй. Нууцлалын бодлогод нэмэлт, өөрчлөлт оруулсан тохиолдолд тухай бүр Апп-д нээлттэй байршуулах бөгөөд Хэрэглэгч танилцах үүрэг хүлээнэ.
-
-10.2 Нууцлалын бодлого, түүнд оруулсан нэмэлт, өөрчлөлтийг батлагдсан өдрөөс эхлэн Хэрэглэгч дагаж мөрдөнө.`,
-  },
-  {
-    title: '"ТҮМЭН" ХОНЖВОРТ СУГАЛААНЫ ҮЙЛЧИЛГЭЭНИЙ НӨХЦӨЛ',
+const content = {
+  mn: {
+    title: '"ТҮМЭН СУГАЛАА" ХОНЖВОРТ СУГАЛААНЫ ҮЙЛЧИЛГЭЭНИЙ НӨХЦӨЛ',
     date: "Нийтэлсэн огноо: 2025 оны 11-р сарын 14-ний өдөр",
-    content: `1. ЕРӨНХИЙ НӨХЦӨЛ
+    body: `1. ЕРӨНХИЙ НӨХЦӨЛ
 
 1.1 Энэхүү Үйлчилгээний нөхцөлөөр "Meirmen International" ХХК ("Компани", эсхүл "Бид" гэх)-ийн хөгжүүлсэн "TUMEN SUGALAA" аппликэйшн ("Апп" гэх)-д хэрэглэгчийг бүртгэх, Апп-г ашиглах, сугалаа худалдан авч хонжворт сугалаанд оролцох, хонжвор олгохтой холбоотой үүсэх харилцааг зохицуулна.
 
@@ -286,15 +169,184 @@ const sections = [
 9.3.3 TUMEN SUGALAA албан ёсны сошиал (facebook, instagram) сувагт хандах;
 9.3.4 Компанийн байранд биечлэн ирэх.`,
   },
-];
+  en: {
+    title: '"TUMEN SUGALAA" PRIZE LOTTERY TERMS OF SERVICE',
+    date: "Published date: November 14, 2025",
+    body: `1. GENERAL PROVISIONS
+
+1.1 These Terms of Service govern the relationship arising from registering Users on the "TUMEN SUGALAA" application ("App") developed by "Meirmen International" LLC ("Company" or "We"), using the App, purchasing lottery tickets and participating in prize lotteries, and awarding prizes.
+
+1.2 By registering on the App, You ("User") are obligated to comply with these Terms of Service, so please fully review and decide whether to accept them.
+
+1.3 By fully reviewing and electronically accepting the Terms of Service and Privacy Policy and creating a user account, you will be able to fully use the App.
+
+1.4 The Company operates and offers the Tumen prize lottery to users under the special license for "issuing prize lotteries for property and money" as stipulated in the Law on Permits of Mongolia.
+
+1.5 Terms used in these Terms of Service:
+
+1.5.1 "Prize lottery" or "Lottery" means the scratch-off and prize-matching lotteries on the App issued by the Company;
+1.5.2 "Prize" means the monetary amount or equivalent assets determined by the lottery draw result, to be awarded to the winner;
+1.5.3 "Wallet" means the payment instrument within the App designated for Users to deposit funds for purchasing lottery tickets and for receiving and displaying lottery prizes;
+1.5.4 "Lottery rules" means the product management plan defined and approved by the Company for the lottery draw process;
+1.5.5 "Winner" means a participant who has won a prize through the lottery draw and is entitled to receive that prize;
+1.5.6 "Lucky number" means any number selection chosen by the User from digits 0-9 to purchase a lottery ticket;
+1.5.7 "Lottery number" means a 6-digit User ticket created by the User themselves or generated using automatic selection on the App.
+
+2. USER REGISTRATION
+
+2.1 Users must be citizens of Mongolia who are at least 18 years old, have full legal capacity, and hold a bank account in their own name at a bank or financial institution operating in Mongolia.
+
+2.2 Users register and log in to the App by entering their phone number and one-time password. Users are verified through the DAN (National Digital Identity) system.
+
+2.3 By accepting the App's Terms of Service, Users consent to the Company retrieving their personal information from the DAN system.
+
+2.4 User registration is verified when the User meets the requirements specified in Section 2.1 and provides complete and accurate information.
+
+2.5 Once User registration is verified, the User becomes eligible to participate in prize lotteries.
+
+2.6 Users shall not create duplicate accounts in their own name or in the name of third parties. If the phone number used for registration changes, the User is responsible for updating their registration information in the App.
+
+2.7 Users are obligated not to share their login credentials, one-time passwords, phone numbers, or PIN codes with others.
+
+2.8 The information you provide when creating your registration must be accurate. The Company reserves the right to freeze your wallet activity and withhold prizes if it determines that your registration is false or inconsistent.
+
+2.9 You are obligated to immediately notify the Company of any violations related to someone creating an account using your information or using your user account.
+
+3. RIGHT TO PARTICIPATE IN THE LOTTERY AND LOTTERY RULES
+
+3.1 Users may purchase and participate in lotteries after their user registration has been verified on the App.
+
+3.2 Users participate in the lottery by purchasing prize lottery tickets in advance before the draw takes place.
+
+3.3 These Terms of Service apply equally to all lotteries organized on the App.
+
+3.4 The App organizes prize-matching lotteries:
+
+3.4.1 This is a type of lottery where winners are determined after the pre-announced prize pool has been formed.
+3.4.2 Lottery tickets cost between 1,000-50,000 MNT and are organized differently depending on ticket sales and the size of the prize pool.
+3.4.3 Prizes may consist of cash, movable property, and immovable property.
+
+3.5 Purchasing lottery tickets and participating in the lottery:
+
+3.5.1 You may choose to participate in any lottery announced on the App.
+3.5.2 Please carefully read the Terms of Service and lottery rules before participating in the lottery.
+3.5.3 Once your registration is verified, you can top up your Wallet in the App to deposit funds for purchasing lottery tickets.
+3.5.4 Users purchase lottery tickets using the Wallet payment instrument on the App.
+
+3.6 Users participate in the prize lottery with the understanding and acceptance of the following:
+
+3.6.1 You are participating in the lottery of your own free will, fully understanding and accepting the risks and consequences of the prize lottery, and We do not guarantee that you will win or receive a prize.
+3.6.2 Circumstances beyond the Company's control, including unexpected events and force majeure, may make it impossible to use the App.
+3.6.3 Except as required by law, the Company shall not be liable for your profits, income, or losses related to lottery activities, nor shall it refund lottery ticket purchases.
+
+3.7 Lottery organization and rules:
+
+3.7.1 The Company shall determine the winners of prize-matching lotteries through purely random methods, and the relevant development and algorithms shall be implemented in the App.
+3.7.2 Prize-matching lotteries shall be organized within 24-48 hours after the prize pool is formed at regular intervals, and winners shall be announced via live broadcast on the Tumen Sugalaa social media accounts.
+3.7.3 If the prize pool has not been formed by the scheduled time for a prize-matching lottery, the Company may extend the lottery period and will notify Users through the App.
+3.7.4 The Company shall determine by its own rules which lotteries will be announced on public TV channels and will inform customers.
+3.7.5 Users will be notified about lottery draw results for their purchased tickets through the App's notifications section.
+3.7.6 Users who become winners will be notified by a call to their registered phone number in the App during the draw.
+
+4. CONDITIONS FOR AWARDING LOTTERY PRIZES
+
+4.1 Lottery prizes may consist of cash, movable property, and immovable property.
+
+4.2 Cash prizes shall be transferred to the Winner's Wallet on the App on the day of the draw. When transferring, the applicable taxes shall be deducted in accordance with the laws of Mongolia.
+
+4.3 Property prizes shall be collected in person by the Winner at the Company's premises after the draw date.
+
+4.4 Users may receive and use their prizes via QPay or by transferring to a bank account registered in their name.
+
+4.5 For prizes awarded over a long period or in multiple installments, the Company shall enter into a contract with the Winner and award the prize according to the contract terms.
+
+4.6 Users may accumulate reward points through their active engagement on the App, and up to 5% in points of each lottery ticket purchase may be credited to the User's Wallet.
+
+4.7 The Company reserves the right to verify and review User information when awarding prizes.
+
+4.8 Users may not transfer their winnings to others or exchange them for other types of prizes.
+
+4.9 The Winner's prize shall be held for one year; if the User has not claimed their prize within this period, it shall be used in accordance with the applicable regulations.
+
+4.10 If a User's Wallet has been inactive for 6 (six) months, the funds shall be transferred to their registered bank account and their registration shall be deleted.
+
+5. USER RIGHTS AND OBLIGATIONS
+
+5.1 Users are obligated to use the App in accordance with the rules and conditions specified in the Terms of Service.
+5.2 Users are obligated to enter accurate information in the App and not to provide false, misleading, incomplete, or incorrect information to the Company or other Users.
+5.3 Users are obligated not to open more than one account on the App and not to create and use accounts on behalf of third parties.
+5.4 Users are obligated not to pay for lottery tickets or receive prizes through channels other than the App.
+5.5 Users are obligated to confirm contracts when the Company deems it necessary to enter into a contract when awarding prizes under the lottery rules.
+5.6 Users are obligated to notify the Company immediately of any malfunctions or disruptions in the App.
+5.7 Users have the right to submit suggestions and requests to the Company regarding App improvements.
+5.8 Users have the right to request deletion of their account from the Company.
+5.9 Users are obligated to maintain the security of their user account.
+5.10 Users have the right to update their profile information in the App when registered information changes or needs updating.
+5.11 Users are responsible for the accuracy of their submitted information and shall bear full responsibility for any obligations, liabilities, and damages arising therefrom.
+5.12 One-time withdrawals of 1,000,000 MNT or more shall be processed within 24 hours on business days and within 72 hours on holidays.
+
+6. SERVICE RESTRICTIONS AND COMPANY RIGHTS AND OBLIGATIONS
+
+6.1 The following actions are prohibited for Users, and in case of violation, the Company shall take measures up to and including restricting or suspending the User's App usage for a specified period or closing the User's account:
+
+6.1.1 Using the App improperly or for illegal purposes;
+6.1.2 Using the App to advertise any commercial products or services;
+6.1.3 Defaming the Company's rights and reputation or violating intellectual property rights on the App;
+6.1.4 Deliberately interfering with the normal operation of the App;
+6.1.5 Creating fraudulent user registrations or creating multiple user accounts;
+6.1.6 Endangering the security of the Company and Users, or engaging in fraudulent or criminal activities.
+
+6.2 If the Company suspects a User of money laundering or fraudulent activities, this shall constitute grounds for implementing the measures specified in Section 6.1.
+
+6.3 Users are obligated to pay and settle any payments, claims, expenses, and damages arising from violations of the prohibitions specified in Section 6.1.
+
+6.4 The Company reserves the right to decide whether to involve an independent audit during the draw, depending on the characteristics of the lottery and the prize pool.
+
+6.5 The Company does not guarantee the accuracy of, and shall not be liable for, content it has not published.
+
+6.6 Although the Company develops the App to be available at all hours of the day, it shall perform repairs and updates as necessary from time to time.
+
+6.7 While the Company is obligated not to disclose Users' personal information to other parties, it may transfer information to authorized government agencies on the grounds prescribed by law and regulations.
+
+7. USER INFORMATION CONFIDENTIALITY
+
+7.1 During the creation of an account on the App and the use of the App, certain information, documents, and personal information about the User and their access shall be collected, processed, and used by the Company in accordance with the Privacy Policy.
+
+7.2 The Company shall retain information related to lottery draws, prizes, and Users for a minimum of 12 (twelve) months from the date of recording.
+
+8. INTELLECTUAL PROPERTY RIGHTS PROTECTION
+
+8.1 The design, basic structure, product and service solutions, lottery formats, lottery rules, offered services, all content on the App, logos, text, images, material trademarks, copyrights, intellectual property, and the exclusive right to use them are reserved by the Company or the respective intellectual property rights holders.
+
+8.2 Users are prohibited from copying, selling, modifying, or otherwise using the App or any part thereof for the purpose of competing with the Company.
+
+8.3 If a User violates the intellectual property provisions, they shall be liable for any resulting damages and compensation.
+
+9. MISCELLANEOUS
+
+9.1 Users are obligated to review any additions or amendments to the Terms of Service as soon as they are made, and they shall be openly posted on the App to ensure access.
+
+9.2 Users shall comply with the Terms of Service and any additions and amendments thereto from the date they are posted on the App.
+
+9.3 You may resolve any suggestions, requests, or complaints related to the Terms of Service through the following channels:
+
+9.3.1 Contact the helpline at 90171717;
+9.3.2 Send an email to munkhbayar@tumensugalaa.mn;
+9.3.3 Contact TUMEN SUGALAA's official social media accounts (Facebook, Instagram);
+9.3.4 Visit the Company's premises in person.`,
+  },
+};
 
 export default function TermsPage() {
   const router = useRouter();
+  const [lang, setLang] = useState<"mn" | "en">("mn");
+
+  const c = content[lang];
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-28 pb-16 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8 relative z-50">
+        <div className="mb-8 flex items-center justify-between relative z-50">
           <button
             onClick={() => router.push("/")}
             className="inline-flex items-center rounded-lg bg-white dark:bg-gray-800 px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white shadow-sm border border-gray-200 dark:border-gray-600 cursor-pointer"
@@ -312,27 +364,43 @@ export default function TermsPage() {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Буцах
+            {lang === "mn" ? "Буцах" : "Back"}
           </button>
+
+          <div className="inline-flex rounded-lg border border-gray-200 dark:border-gray-600 overflow-hidden">
+            <button
+              onClick={() => setLang("mn")}
+              className={`px-4 py-2 text-sm font-medium cursor-pointer ${
+                lang === "mn"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+              }`}
+            >
+              Монгол
+            </button>
+            <button
+              onClick={() => setLang("en")}
+              className={`px-4 py-2 text-sm font-medium cursor-pointer ${
+                lang === "en"
+                  ? "bg-blue-600 text-white"
+                  : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+              }`}
+            >
+              English
+            </button>
+          </div>
         </div>
 
-        <div className="space-y-12">
-          {sections.map((section, i) => (
-            <div
-              key={i}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8"
-            >
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                {section.title}
-              </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
-                {section.date}
-              </p>
-              <div className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-line">
-                {section.content}
-              </div>
-            </div>
-          ))}
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-8">
+          <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            {c.title}
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
+            {c.date}
+          </p>
+          <div className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-line">
+            {c.body}
+          </div>
         </div>
       </div>
     </div>

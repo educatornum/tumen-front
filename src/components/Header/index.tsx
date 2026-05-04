@@ -157,12 +157,15 @@ const Header = () => {
                   </ul>
                 </nav>
               </div>
-              <Link
-                href="/terms"
-                className="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium text-white backdrop-blur-sm hover:bg-white/20 transition-colors whitespace-nowrap"
-              >
-                Үйлчилгээний нөхцөл
-              </Link>
+              
+          <div className="flex gap-4 justify-center mt-6">
+            <a href="/terms" className="text-xs text-white/50 hover:text-white/80 underline underline-offset-2 transition-colors">
+              Үйлчилгээний нөхцөл
+            </a>
+            <a href="/privacy" className="text-xs text-white/50 hover:text-white/80 underline underline-offset-2 transition-colors">
+              Нууцлалын бодлого
+            </a>
+          </div>
             </div>
           </div>
         </div>
