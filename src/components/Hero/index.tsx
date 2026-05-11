@@ -513,7 +513,7 @@ export default function Hero() {
   
 
 
-  const TOTAL_LOTTERY = 16999;
+  const TOTAL_LOTTERY = 9999;
 
    const fetchCounts = async () => {
     try {
@@ -630,7 +630,7 @@ export default function Hero() {
           <div className="max-w-2xl mx-auto mb-8 px-2 sm:px-0">
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 lg:p-8 border border-white/20 shadow-2xl">
               <div className="flex  sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 mb-3 sm:mb-4">
-                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт Land-300 GR</span>
+                <span className="text-xs sm:text-sm lg:text-base font-bold text-white">🎯Дүүргэлт PRADO 150</span>
                 <span className="text-xl sm:text-2xl lg:text-3xl font-black text-red-500">{ counts != null ? (counts / TOTAL_LOTTERY * 100).toFixed(2) + '%' : '0%'}</span>
               </div>
 
